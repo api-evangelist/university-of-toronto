@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "uoft": "https://www.utoronto.ca/ns#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "foundingDate": "schema:foundingDate",
+    "address": "schema:address",
+    "department": "schema:department",
+    "CollegeOrUniversity": "schema:CollegeOrUniversity",
+    "Library": "schema:Library",
+    "api": {
+      "@id": "uoft:api",
+      "@container": "@set"
+    },
+    "ApiObject": {
+      "@id": "uoft:ApiObject",
+      "@context": {
+        "identifier": "schema:identifier",
+        "title": "schema:name",
+        "endpoint": "schema:url",
+        "format": "uoft:format"
+      }
+    },
+    "repositoryItem": {
+      "@id": "uoft:repositoryItem",
+      "@container": "@set"
+    },
+    "RepositoryItem": {
+      "@id": "uoft:RepositoryItem",
+      "@context": {
+        "handle": "schema:identifier",
+        "title": "schema:name",
+        "creator": "schema:creator",
+        "dateIssued": "schema:datePublished",
+        "subject": "schema:about",
+        "abstract": "schema:abstract",
+        "collection": "schema:isPartOf"
+      }
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of Toronto",
+  "url": "https://www.utoronto.ca/",
+  "sameAs": [
+    "https://en.wikipedia.org/wiki/University_of_Toronto",
+    "https://www.linkedin.com/school/university-of-toronto/",
+    "https://github.com/utoronto"
+  ],
+  "department": {
+    "@type": "Library",
+    "name": "University of Toronto Libraries",
+    "url": "https://library.utoronto.ca/"
+  },
+  "api": [
+    {
+      "@type": "ApiObject",
+      "identifier": "tspace-oai-pmh",
+      "title": "TSpace Institutional Repository (OAI-PMH)",
+      "endpoint": "https://utoronto.scholaris.ca/server/oai/request",
+      "format": "OAI-PMH 2.0"
+    },
+    {
+      "@type": "ApiObject",
+      "identifier": "tspace-dspace-rest",
+      "title": "TSpace DSpace REST API",
+      "endpoint": "https://utoronto.scholaris.ca/server/api",
+      "format": "DSpace 8 HAL/REST"
+    }
+  ]
+}
