@@ -1,0 +1,53 @@
+---
+name: University of Toronto
+description: University of Toronto public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      University of Toronto has a modest, decentralized public API footprint. I
+      verified live a standards-based OAI-PMH 2.0 endpoint and a DSpace REST API
+      for the TSpace institutional repository (migrated to the Scholaris DSpace
+      platform). The official EASI Timetable Builder (ttb.utoronto.ca) loads but
+      exposes no publicly documented developer API; guessed endpoint paths
+      returned 404, so no timetable API is cataloged to avoid fabrication. The
+      former community Cobalt open-data API is deprecated/archived since 2020 and
+      is listed only for historical context. No official institution-branded
+      developer portal, sign-up, or plans/rate-limit pages were found.
+    endpoints:
+      - url: https://www.utoronto.ca/
+        status: 200
+        note: Official institution website.
+      - url: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
+        status: 200
+        note: TSpace OAI-PMH 2.0 Identify resolves; repository name "TSpace".
+      - url: https://utoronto.scholaris.ca/server/oai/request?verb=ListMetadataFormats
+        status: 200
+        note: OAI-PMH ListMetadataFormats responds.
+      - url: https://utoronto.scholaris.ca/server/api
+        status: 200
+        note: DSpace REST API root responds on Scholaris platform.
+      - url: https://ttb.utoronto.ca/
+        status: 200
+        note: Official EASI Timetable Builder UI; no public API docs.
+      - url: https://ttb.utoronto.ca/api/getPageableCourses
+        status: 404
+        note: Guessed timetable API path does not resolve; not cataloged.
+      - url: https://github.com/utoronto
+        status: 200
+        note: Official University of Toronto GitHub organization.
+      - url: https://github.com/utlib
+        status: 200
+        note: University of Toronto Libraries GitHub organization.
+      - url: https://github.com/cobalt-uoft/cobalt
+        status: 200
+        note: Cobalt open-data project repo; deprecated/archived since 2020.
+      - url: https://cobalt.qas.im
+        status: 200
+        note: Legacy Cobalt API host responds but project is unmaintained.
+      - url: https://www.linkedin.com/school/university-of-toronto/
+        status: 999
+        note: LinkedIn school page (999 is LinkedIn anti-bot, page exists).

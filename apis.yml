@@ -1,0 +1,96 @@
+---
+aid: university-of-toronto
+name: University of Toronto
+description: >-
+  The University of Toronto is Canada's leading public research university,
+  ranked #26 in the QS World University Rankings 2025. Its public developer and
+  API footprint is modest and decentralized: the University of Toronto Libraries
+  operate the TSpace institutional repository (now hosted on the Scholaris
+  DSpace platform), which exposes a standards-based OAI-PMH 2.0 metadata
+  endpoint and a DSpace REST API. Student-facing course and timetable data is
+  served through the EASI Timetable Builder, but that interface is not publicly
+  documented as a developer API. Historically, the student-driven Cobalt project
+  published open-data APIs for UofT courses, buildings, and campus services, but
+  it has been deprecated/archived since 2020.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Data
+  - Canada
+  - Library
+  - Institutional Repository
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-toronto:tspace-oai-pmh
+    name: TSpace Institutional Repository (OAI-PMH)
+    description: >-
+      OAI-PMH 2.0 metadata harvesting endpoint for TSpace, the University of
+      Toronto Libraries institutional research repository, now hosted on the
+      Scholaris DSpace platform. Supports standard OAI verbs such as Identify,
+      ListMetadataFormats, ListRecords, and GetRecord for harvesting scholarly
+      metadata.
+    humanURL: https://utoronto.scholaris.ca/
+    baseURL: https://utoronto.scholaris.ca/server/oai/request
+    tags: [ OAI-PMH, Institutional Repository, DSpace, Library, Metadata, Research ]
+    properties:
+      - type: Documentation
+        url: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
+  - aid: university-of-toronto:tspace-dspace-rest
+    name: TSpace DSpace REST API
+    description: >-
+      DSpace REST API surface exposed by the Scholaris platform that hosts the
+      University of Toronto TSpace institutional repository. Provides
+      programmatic access to repository communities, collections, and items.
+      This is the standard DSpace REST API; it is not separately documented by
+      the institution.
+    humanURL: https://utoronto.scholaris.ca/
+    baseURL: https://utoronto.scholaris.ca/server/api
+    tags: [ REST, DSpace, Institutional Repository, Library, Research ]
+    properties:
+      - type: Documentation
+        url: https://utoronto.scholaris.ca/server/api
+  - aid: university-of-toronto:cobalt
+    name: Cobalt Open Data API (deprecated)
+    description: >-
+      Cobalt was a student-driven open-data project providing REST APIs for
+      University of Toronto public information including courses, buildings,
+      textbooks, food, athletics, exams, parking, and shuttles. The project is
+      deprecated/archived (as of 2020) and is no longer maintained, but the
+      source and documentation remain publicly available. Listed here for
+      historical completeness; endpoints are not guaranteed to resolve.
+    humanURL: https://github.com/cobalt-uoft/cobalt
+    tags: [ Open Data, Courses, Campus, Deprecated, Community ]
+    properties:
+      - type: Documentation
+        url: https://github.com/cobalt-uoft/documentation
+      - type: GitHub
+        url: https://github.com/cobalt-uoft/cobalt
+common:
+  - type: Website
+    url: https://www.utoronto.ca/
+  - type: GitHub
+    url: https://github.com/utoronto
+  - type: SourceCode
+    url: https://github.com/utlib
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/university-of-toronto/
+  - type: Plans
+    url: plans/university-of-toronto-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-toronto-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-toronto-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
