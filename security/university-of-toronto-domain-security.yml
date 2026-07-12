@@ -1,0 +1,29 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.utoronto.ca
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 22 03:50:38 2026 GMT
+  hsts: true
+  hsts_max_age: 31622400
+- host: utoronto.scholaris.ca
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Apr  5 23:59:59 2027 GMT
+  hsts: true
+  hsts_max_age: 31536000
+domains:
+- domain: utoronto.ca
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: scholaris.ca
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

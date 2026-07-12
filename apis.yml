@@ -75,6 +75,8 @@ apis:
       - type: GitHub
         url: https://github.com/cobalt-uoft/cobalt
 common:
+  - type: DomainSecurity
+    url: security/university-of-toronto-domain-security.yml
   - type: Website
     url: https://www.utoronto.ca/
   - type: GitHub
