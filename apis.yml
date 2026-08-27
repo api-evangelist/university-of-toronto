@@ -56,115 +56,143 @@ created: '2026-06-03'
 modified: '2026-08-19'
 specificationVersion: '0.23'
 apis:
-  - aid: university-of-toronto:ttb-course-timetable
-    name: Timetable Builder API
-    x-operator: institution
-    description: >-
-      The public JSON API behind the official University of Toronto Timetable Builder, operated by
-      Enterprise Applications and Solutions Integration (EASI) within U of T Information Technology
-      Services on the University's own host api.easi.utoronto.ca. Serves course, section,
-      meeting-time, instructor, enrolment-control and building data for every division and all three
-      campuses. Six operations verified live and unauthenticated on 2026-08-19: reference-data,
-      current-session, getMatchingDivisions, getPageableCourses, getCourses and
-      getCoursesByCodeAndSectionCode. The University publishes no documentation, no OpenAPI, no terms
-      of use and no rate-limit statement for it; CORS is pinned to https://ttb.utoronto.ca so browser
-      clients from other origins are blocked while server-side clients are not. The OpenAPI in this
-      repository is an API Evangelist observation, not a University artifact.
-    humanURL: https://ttb.utoronto.ca/
-    baseURL: https://api.easi.utoronto.ca/ttb
-    tags: [ Course Catalog, Timetable, Registrar, Education, Open Data, REST ]
-    properties:
-      - type: OpenAPI
-        url: openapi/university-of-toronto-timetable-builder-openapi.yml
-      - type: Documentation
-        url: https://ttb.utoronto.ca/
-      - type: Authentication
-        url: authentication/university-of-toronto-authentication.yml
-      - type: Errors
-        url: errors/university-of-toronto-errors.yml
-      - type: Lifecycle
-        url: lifecycle/university-of-toronto-lifecycle.yml
-      - type: Examples
-        url: examples/index.yml
-    x-note: >-
-      The baseURL https://api.easi.utoronto.ca/ttb returns HTTP 404 on its own — the gateway routes
-      operations, not a root resource. Verified 2026-08-19: every operation beneath it returns 200.
-      Recorded here so the 404 reads as a measured fact rather than a stale pointer.
-  - aid: university-of-toronto:utorauth-shibboleth-idp
-    name: UTORauth Shibboleth Identity Provider (SAML 2.0 metadata)
-    x-operator: institution
-    description: >-
-      The University of Toronto's Shibboleth identity provider, entityID
-      https://idpz.utorauth.utoronto.ca/shibboleth, serving signed SAML 2.0 metadata from the
-      University's own utorauth.utoronto.ca host. Registered in the Canadian Access Federation
-      (registration authority http://www.canarie.ca, registered 2018-09-21), asserting the REFEDS
-      Research & Scholarship entity category and SIRTFI assurance certification. This is a
-      federation login endpoint for humans in a browser rather than a developer API, and it is
-      catalogued because it is machine-readable, institution-operated by definition, and the
-      University's strongest published standards conformance.
-    humanURL: https://its.utoronto.ca/
-    baseURL: https://idpz.utorauth.utoronto.ca/idp/shibboleth
-    tags: [ Identity Federation, SAML, Shibboleth, Single Sign-On, Education, Metadata ]
-    properties:
-      - type: Conformance
-        url: conformance/university-of-toronto-conformance.yml
-      - type: Authentication
-        url: authentication/university-of-toronto-authentication.yml
-  - aid: university-of-toronto:tspace-oai-pmh
-    name: TSpace Institutional Repository (OAI-PMH) — tenant on Scholaris
-    x-operator: tenant
-    description: >-
-      OAI-PMH 2.0 harvesting endpoint for TSpace, the University of Toronto Libraries institutional
-      research repository. The repository is the University's — Identify returns repositoryName
-      "TSpace" with adminEmail tspace@library.utoronto.ca and an earliest datestamp of 2003 — but the
-      endpoint runs on utoronto.scholaris.ca, an institution-specific subdomain of Scholaris, the
-      DSpace service operated by the Ontario Council of University Libraries. The University's own
-      vanity host tspace.library.utoronto.ca 302-redirects here. Recorded as a tenant relationship:
-      the data and the collection policy are U of T's, the contract and the software are not, and the
-      generic DSpace specification is deliberately NOT saved under this institution.
-    humanURL: https://utoronto.scholaris.ca/
-    baseURL: https://utoronto.scholaris.ca/server/oai/request
-    tags: [ OAI-PMH, Institutional Repository, DSpace, Library, Metadata, Research, Tenant ]
-    properties:
-      - type: Documentation
-        url: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
-      - type: Conformance
-        url: conformance/university-of-toronto-conformance.yml
-  - aid: university-of-toronto:tspace-dspace-rest
-    name: TSpace DSpace REST API — tenant on Scholaris
-    x-operator: tenant
-    description: >-
-      The DSpace 8.4 HAL REST API serving TSpace. Verified live on 2026-08-19: the root document
-      returns dspaceName "TSpace", dspaceVersion "DSpace 8.4" and a link index covering communities,
-      collections, items, bitstreams and authn. This is the stock DSpace contract shipped by the
-      Scholaris platform; the University neither designed nor documents it. Catalogued as a tenant
-      surface so the relationship is visible without crediting U of T with DSpace's engineering.
-    humanURL: https://utoronto.scholaris.ca/
-    baseURL: https://utoronto.scholaris.ca/server/api
-    tags: [ REST, DSpace, Institutional Repository, Library, Research, Tenant ]
-    properties:
-      - type: Documentation
-        url: https://utoronto.scholaris.ca/server/api
-  - aid: university-of-toronto:uoft-dataverse-borealis
-    name: U of T Dataverse (Borealis) — tenant
-    x-operator: tenant
-    description: >-
-      The University of Toronto's research data repository collection inside Borealis, the Canadian
-      Dataverse Repository operated by Scholars Portal for the Ontario Council of University
-      Libraries. Verified live on 2026-08-19 via the Dataverse Native API at
-      https://borealisdata.ca/api/dataverses/toronto, which returns alias "toronto", name "U of T
-      Dataverse", affiliation "University of Toronto". The Dataverse Native API contract belongs to
-      the Dataverse Project and the deployment to Borealis; U of T operates the collection, the
-      curation and the deposits. No Dataverse specification is saved under this institution.
-    humanURL: https://borealisdata.ca/dataverse/toronto
-    tags: [ Research Data, Dataverse, Repository, Open Data, Tenant ]
-    properties:
-      - type: Documentation
-        url: https://borealisdata.ca/dataverse/toronto
-    x-note: >-
-      Deliberately carries no baseURL. borealisdata.ca is a shared vendor host serving many Canadian
-      institutions; publishing it as a U of T base URL is precisely the misattribution this profile
-      exists to prevent. The relationship is the fact worth recording, not the endpoint.
+- aid: university-of-toronto:utorauth-shibboleth-idp
+  name: UTORauth Shibboleth Identity Provider (SAML 2.0 metadata)
+  x-operator: institution
+  description: >-
+    The University of Toronto's Shibboleth identity provider, entityID https://idpz.utorauth.utoronto.ca/shibboleth,
+    serving signed SAML 2.0 metadata from the University's own utorauth.utoronto.ca host. Registered in
+    the Canadian Access Federation (registration authority http://www.canarie.ca, registered 2018-09-21),
+    asserting the REFEDS Research & Scholarship entity category and SIRTFI assurance certification. This
+    is a federation login endpoint for humans in a browser rather than a developer API, and it is catalogued
+    because it is machine-readable, institution-operated by definition, and the University's strongest
+    published standards conformance.
+  humanURL: https://its.utoronto.ca/
+  baseURL: https://idpz.utorauth.utoronto.ca/idp/shibboleth
+  tags:
+  - Identity Federation
+  - SAML
+  - Shibboleth
+  - Single Sign-On
+  - Education
+  - Metadata
+  properties:
+  - type: Conformance
+    url: conformance/university-of-toronto-conformance.yml
+  - type: Authentication
+    url: authentication/university-of-toronto-authentication.yml
+- aid: university-of-toronto:tspace-oai-pmh
+  name: TSpace Institutional Repository (OAI-PMH) — tenant on Scholaris
+  x-operator: tenant
+  description: >-
+    OAI-PMH 2.0 harvesting endpoint for TSpace, the University of Toronto Libraries institutional research
+    repository. The repository is the University's — Identify returns repositoryName "TSpace" with adminEmail
+    tspace@library.utoronto.ca and an earliest datestamp of 2003 — but the endpoint runs on utoronto.scholaris.ca,
+    an institution-specific subdomain of Scholaris, the DSpace service operated by the Ontario Council
+    of University Libraries. The University's own vanity host tspace.library.utoronto.ca 302-redirects
+    here. Recorded as a tenant relationship: the data and the collection policy are U of T's, the contract
+    and the software are not, and the generic DSpace specification is deliberately NOT saved under this
+    institution.
+  humanURL: https://utoronto.scholaris.ca/
+  baseURL: https://utoronto.scholaris.ca/server/oai/request
+  tags:
+  - OAI-PMH
+  - Institutional Repository
+  - DSpace
+  - Library
+  - Metadata
+  - Research
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
+  - type: Conformance
+    url: conformance/university-of-toronto-conformance.yml
+- aid: university-of-toronto:tspace-dspace-rest
+  name: TSpace DSpace REST API — tenant on Scholaris
+  x-operator: tenant
+  description: >-
+    The DSpace 8.4 HAL REST API serving TSpace. Verified live on 2026-08-19: the root document returns
+    dspaceName "TSpace", dspaceVersion "DSpace 8.4" and a link index covering communities, collections,
+    items, bitstreams and authn. This is the stock DSpace contract shipped by the Scholaris platform;
+    the University neither designed nor documents it. Catalogued as a tenant surface so the relationship
+    is visible without crediting U of T with DSpace's engineering.
+  humanURL: https://utoronto.scholaris.ca/
+  baseURL: https://utoronto.scholaris.ca/server/api
+  tags:
+  - REST
+  - DSpace
+  - Institutional Repository
+  - Library
+  - Research
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://utoronto.scholaris.ca/server/api
+- aid: university-of-toronto:uoft-dataverse-borealis
+  name: U of T Dataverse (Borealis) — tenant
+  x-operator: tenant
+  description: >-
+    The University of Toronto's research data repository collection inside Borealis, the Canadian Dataverse
+    Repository operated by Scholars Portal for the Ontario Council of University Libraries. Verified live
+    on 2026-08-19 via the Dataverse Native API at https://borealisdata.ca/api/dataverses/toronto, which
+    returns alias "toronto", name "U of T Dataverse", affiliation "University of Toronto". The Dataverse
+    Native API contract belongs to the Dataverse Project and the deployment to Borealis; U of T operates
+    the collection, the curation and the deposits. No Dataverse specification is saved under this institution.
+  humanURL: https://borealisdata.ca/dataverse/toronto
+  tags:
+  - Research Data
+  - Dataverse
+  - Repository
+  - Open Data
+  - Tenant
+  properties:
+  - type: Documentation
+    url: https://borealisdata.ca/dataverse/toronto
+  x-note: >-
+    Deliberately carries no baseURL. borealisdata.ca is a shared vendor host serving many Canadian institutions;
+    publishing it as a U of T base URL is precisely the misattribution this profile exists to prevent.
+    The relationship is the fact worth recording, not the endpoint.
+- aid: university-of-toronto:university-of-toronto-courses-api
+  name: University of Toronto Courses API
+  description: Course, section and meeting-time retrieval.
+  humanURL: https://ttb.utoronto.ca/
+  baseURL: https://api.easi.utoronto.ca/ttb
+  tags:
+  - Courses
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-toronto-courses-api-openapi.yml
+  - type: Documentation
+    url: https://ttb.utoronto.ca/
+  - type: Authentication
+    url: authentication/university-of-toronto-authentication.yml
+  - type: Errors
+    url: errors/university-of-toronto-errors.yml
+  - type: Lifecycle
+    url: lifecycle/university-of-toronto-lifecycle.yml
+  - type: Examples
+    url: examples/index.yml
+- aid: university-of-toronto:university-of-toronto-reference-data-api
+  name: University of Toronto Reference Data API
+  description: Sessions, divisions, campuses and other search facets.
+  humanURL: https://ttb.utoronto.ca/
+  baseURL: https://api.easi.utoronto.ca/ttb
+  tags:
+  - Reference Data
+  properties:
+  - type: OpenAPI
+    url: openapi/university-of-toronto-reference-data-api-openapi.yml
+  - type: Documentation
+    url: https://ttb.utoronto.ca/
+  - type: Authentication
+    url: authentication/university-of-toronto-authentication.yml
+  - type: Errors
+    url: errors/university-of-toronto-errors.yml
+  - type: Lifecycle
+    url: lifecycle/university-of-toronto-lifecycle.yml
+  - type: Examples
+    url: examples/index.yml
 common:
   - type: Website
     url: https://www.utoronto.ca/
