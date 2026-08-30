@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/json-schema/ttb-section.json",
+  "title": "University of Toronto Timetable Builder \u2014 Section",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "Derived by API Evangelist from live responses of https://api.easi.utoronto.ca/ttb captured 2026-08-19. The University of Toronto publishes no JSON Schema for this API.",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": [
+    "name",
+    "teachMethod"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "examples": [
+        "LEC0101",
+        "TUT0102"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "examples": [
+        "Lecture",
+        "Tutorial",
+        "Practical"
+      ]
+    },
+    "teachMethod": {
+      "type": "string",
+      "examples": [
+        "LEC",
+        "TUT",
+        "PRA"
+      ]
+    },
+    "sectionNumber": {
+      "type": "string",
+      "examples": [
+        "0101"
+      ]
+    },
+    "meetingTimes": {
+      "type": "array",
+      "items": {
+        "$ref": "ttb-meeting-time.json"
+      }
+    },
+    "firstMeeting": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "instructors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "currentEnrolment": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxEnrolment": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "currentWaitlist": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "cancelInd": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ],
+      "description": "Y when the section is cancelled. A boolean encoded as a character."
+    },
+    "waitlistInd": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "tbaInd": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ],
+      "description": "Y when meeting times are to be announced."
+    },
+    "openLimitInd": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "enrolmentInd": {
+      "type": "string",
+      "description": "Enrolment-control indicator code; meaning is division-specific and resolved via divisionalEnrolmentIndicators."
+    },
+    "deliveryModes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "examples": [
+              "INPER",
+              "ONLSYNC",
+              "ONLASYNC"
+            ]
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string",
+            "description": "May contain HTML."
+          }
+        }
+      }
+    },
+    "enrolmentControls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

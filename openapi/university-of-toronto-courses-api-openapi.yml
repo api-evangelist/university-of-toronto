@@ -1,0 +1,443 @@
+openapi: 3.2.0
+info:
+  title: University of Toronto Timetable Builder Courses API
+  version: '2026-08-19'
+  x-operator: institution
+  x-provenance:
+    generated: '2026-08-19'
+    method: derived
+    source: Derived by API Evangelist from live, unauthenticated probes of https://api.easi.utoronto.ca/ttb on 2026-08-19 and from the operation constants declared in the official Timetable Builder client bundle at https://ttb.utoronto.ca/main.934e36b03104594f.js. The University of Toronto does not publish an OpenAPI description for this API; this document is a third-party observation, not a University of Toronto artifact.
+  description: 'Unofficial, observation-derived description of the public JSON API behind the University of Toronto Timetable Builder (https://ttb.utoronto.ca), operated by Enterprise Applications and Solutions Integration (EASI) within U of T Information Technology Services. The host api.easi.utoronto.ca is under the University''s own registrable domain (utoronto.ca), which makes this one of the few genuinely institution-operated programmable surfaces at U of T.
+
+    The API serves course, section, meeting-time, instructor, enrolment-control and building data for the University''s academic timetable across all three campuses (St. George, Mississauga, Scarborough) and all divisions. No API key, token or other credential is required. The service sets Access-Control-Allow-Origin: https://ttb.utoronto.ca, so browser callers from other origins are blocked while server-to-server callers are not.
+
+    NOT AN OFFICIAL CONTRACT. The University publishes no developer portal, no terms of use for this API, no rate-limit statement and no versioning policy. Treat every shape here as observed behaviour that the University may change without notice.'
+  contact:
+    name: University of Toronto — Enterprise Applications and Solutions Integration (EASI)
+    url: https://easi.its.utoronto.ca/
+  termsOfService: https://www.utoronto.ca/privacy
+servers:
+- url: https://api.easi.utoronto.ca/ttb
+  description: Production Timetable Builder API (probed live 2026-08-19)
+tags:
+- name: Courses
+  description: Course, section and meeting-time retrieval.
+paths:
+  /getPageableCourses:
+    post:
+      tags:
+      - Courses
+      operationId: getPageableCourses
+      summary: Search the timetable, one page at a time
+      description: 'The primary search operation. Accepts a faceted search body and returns a page of matching courses together with the divisional legends and enrolment-indicator glossaries needed to render them. Verified live 2026-08-19: HTTP 200 with course data for courseCode CSC108H1, session 20269, division ARTSC.
+
+        A search that matches nothing returns HTTP 404 with a body-level status code 4404 and a null payload, not an empty collection — see the ApplicationStatus schema.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseSearch'
+            examples:
+              live:
+                externalValue: ../examples/ttb-pageable-courses-request.json
+      responses:
+        '200':
+          description: One page of matching courses.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageableCourseEnvelope'
+              examples:
+                live:
+                  externalValue: ../examples/ttb-pageable-courses-response.json
+            application/xml:
+              schema:
+                type: string
+                description: 'Returned when the client does not send Accept: application/json. The service content-negotiates and will emit a <TTBResponse> XML document instead.'
+        '404':
+          description: 'Either the gateway did not match the route, or the search matched no courses. The two are distinguishable by body: a gateway miss carries statusCode/message, a no-result search carries a null payload and status code 4404.'
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/GatewayError'
+                - $ref: '#/components/schemas/ApplicationStatusEnvelope'
+              examples:
+                noResults:
+                  externalValue: ../examples/ttb-no-results-response.json
+                gatewayMiss:
+                  externalValue: ../examples/ttb-gateway-404-response.json
+  /getCourses:
+    post:
+      tags:
+      - Courses
+      operationId: getCourses
+      summary: Search the timetable without paging
+      description: 'Same search body as getPageableCourses minus the paging fields, returning every match in one response. Verified live 2026-08-19: HTTP 200 with a 12.9 MB body for a division-wide search. Callers should prefer getPageableCourses; there is no documented rate limit and no compression negotiated by default.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseSearch'
+      responses:
+        '200':
+          description: Every matching course.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Course'
+                  status:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ApplicationStatus'
+        '404':
+          $ref: '#/components/responses/GatewayNotFound'
+  /getCoursesByCodeAndSectionCode/{code}:
+    get:
+      tags:
+      - Courses
+      operationId: getCoursesByCodeAndSectionCode
+      summary: Retrieve every offering of one course code
+      description: 'Returns the pageable-course envelope for a single course code. Verified live 2026-08-19 with code CSC108H1: HTTP 200, ~295 KB. The client bundle also builds a two-segment form carrying a section code; that form returned HTTP 404 on 2026-08-19 and is therefore NOT described here.'
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: Uppercase course code, for example CSC108H1.
+        schema:
+          type: string
+          pattern: ^[A-Z]{3}[0-9]{3}[A-Z][0-9]$
+        example: CSC108H1
+      responses:
+        '200':
+          description: Offerings of the requested course.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageableCourseEnvelope'
+        '404':
+          $ref: '#/components/responses/GatewayNotFound'
+components:
+  schemas:
+    PageableCourseEnvelope:
+      type: object
+      properties:
+        payload:
+          type: object
+          properties:
+            pageableCourse:
+              type: object
+              properties:
+                courses:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Course'
+                total:
+                  type: integer
+                page:
+                  type: integer
+                pageSize:
+                  type: integer
+                direction:
+                  type: string
+            divisionalLegends:
+              type: object
+              description: Division code to an HTML legend explaining that division's course coding.
+              additionalProperties:
+                type: string
+            divisionalEnrolmentIndicators:
+              type: object
+              description: Division code to the list of enrolment-control indicator codes it uses.
+              additionalProperties:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                    name:
+                      type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatus'
+    GatewayError:
+      type: object
+      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
+    ApplicationStatusEnvelope:
+      type: object
+      properties:
+        payload:
+          type: 'null'
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatus'
+    Course:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Opaque identifier. Observed to change between timetable publications — not a stable key.
+          example: 69dd3ea4830c3634bbb69786
+        name:
+          type: string
+          example: Mathematics of Finance for Non-Actuaries
+        ucName:
+          type:
+          - string
+          - 'null'
+        code:
+          type: string
+          example: ACT230H1
+        sectionCode:
+          type: string
+          enum:
+          - F
+          - S
+          - Y
+        campus:
+          type: string
+          example: St. George
+        sessions:
+          type: array
+          items:
+            type: string
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+    MeetingTime:
+      type: object
+      properties:
+        start:
+          $ref: '#/components/schemas/DayTime'
+        end:
+          $ref: '#/components/schemas/DayTime'
+        building:
+          $ref: '#/components/schemas/Building'
+        sessionCode:
+          type: string
+        repetition:
+          type: string
+          example: WEEKLY
+        repetitionTime:
+          type: string
+          example: ONCE_A_WEEK
+    Building:
+      type: object
+      properties:
+        buildingCode:
+          type: string
+          example: SF
+        buildingRoomNumber:
+          type: string
+        buildingRoomSuffix:
+          type: string
+        buildingUrl:
+          type: string
+          format: uri
+          description: Deep link into the official U of T campus map at https://map.utoronto.ca.
+          example: https://map.utoronto.ca/?id=1809#!m/494481
+        buildingName:
+          type:
+          - string
+          - 'null'
+    CourseSearch:
+      type: object
+      description: Faceted timetable search. Empty arrays mean "do not filter on this facet".
+      required:
+      - courseCodeAndTitleProps
+      - sessions
+      - divisions
+      properties:
+        courseCodeAndTitleProps:
+          type: object
+          properties:
+            courseCode:
+              type: string
+              example: CSC108H1
+            courseTitle:
+              type: string
+            courseSectionCode:
+              type: string
+              description: F (fall), S (winter) or Y (full year).
+            searchCourseDescription:
+              type: boolean
+        departmentProps:
+          type: array
+          items:
+            type: object
+        campuses:
+          type: array
+          items:
+            type: string
+            example: ST_GEORGE
+        sessions:
+          type: array
+          description: Session codes, for example 20269 for Fall 2026.
+          items:
+            type: string
+        requirementProps:
+          type: array
+          items:
+            type: object
+        instructor:
+          type: string
+        courseLevels:
+          type: array
+          items:
+            type: string
+        deliveryModes:
+          type: array
+          items:
+            type: string
+        dayPreferences:
+          type: array
+          items:
+            type: object
+        timePreferences:
+          type: array
+          items:
+            type: object
+        divisions:
+          type: array
+          description: Division codes, for example ARTSC, APSC, ERIN, SCAR.
+          items:
+            type: string
+        creditWeights:
+          type: array
+          items:
+            type: string
+        page:
+          type: integer
+          minimum: 1
+          description: getPageableCourses only.
+        pageSize:
+          type: integer
+          description: getPageableCourses only.
+        direction:
+          type: string
+          enum:
+          - asc
+          - desc
+    DayTime:
+      type: object
+      description: Non-standard time encoding. `day` is an integer weekday index and `millisofday` is milliseconds since local midnight; there is no timezone, date or ISO-8601 field anywhere in the response.
+      properties:
+        day:
+          type: integer
+          minimum: 1
+          maximum: 7
+        millisofday:
+          type: integer
+          example: 43200000
+    ApplicationStatus:
+      type: object
+      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
+      properties:
+        code:
+          type: integer
+          example: 4404
+        message:
+          type: string
+          example: No results found. Please try modifying your search criteria.
+    Section:
+      type: object
+      properties:
+        name:
+          type: string
+          example: TUT0102
+        type:
+          type: string
+          example: Tutorial
+        teachMethod:
+          type: string
+          example: TUT
+        sectionNumber:
+          type: string
+        meetingTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingTime'
+        instructors:
+          type: array
+          items:
+            type: object
+        currentEnrolment:
+          type: integer
+        maxEnrolment:
+          type: integer
+        currentWaitlist:
+          type: integer
+        subTitle:
+          type: string
+        cancelInd:
+          type: string
+          enum:
+          - Y
+          - N
+        waitlistInd:
+          type: string
+          enum:
+          - Y
+          - N
+        tbaInd:
+          type: string
+          enum:
+          - Y
+          - N
+        openLimitInd:
+          type: string
+          enum:
+          - Y
+          - N
+        deliveryModes:
+          type: array
+          items:
+            type: object
+            properties:
+              session:
+                type: string
+              mode:
+                type: string
+                example: INPER
+        notes:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              content:
+                type: string
+        enrolmentControls:
+          type: array
+          items:
+            type: object
+  responses:
+    GatewayNotFound:
+      description: The gateway did not match a route.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GatewayError'
+          examples:
+            live:
+              externalValue: ../examples/ttb-gateway-404-response.json

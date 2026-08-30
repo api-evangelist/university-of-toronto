@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/json-schema/ttb-course-search.json",
+  "title": "University of Toronto Timetable Builder \u2014 Course Search Request",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "Derived by API Evangelist from live responses of https://api.easi.utoronto.ca/ttb captured 2026-08-19. The University of Toronto publishes no JSON Schema for this API.",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": [
+    "courseCodeAndTitleProps",
+    "sessions",
+    "divisions"
+  ],
+  "properties": {
+    "courseCodeAndTitleProps": {
+      "type": "object",
+      "properties": {
+        "courseCode": {
+          "type": "string"
+        },
+        "courseTitle": {
+          "type": "string"
+        },
+        "courseSectionCode": {
+          "type": "string"
+        },
+        "searchCourseDescription": {
+          "type": "boolean"
+        }
+      }
+    },
+    "departmentProps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "campuses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{5}[FSY]?$"
+      }
+    },
+    "requirementProps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "instructor": {
+      "type": "string"
+    },
+    "courseLevels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deliveryModes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dayPreferences": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "timePreferences": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "divisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "examples": [
+          "ARTSC",
+          "APSC",
+          "ERIN",
+          "SCAR"
+        ]
+      }
+    },
+    "creditWeights": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "page": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "pageSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "asc",
+        "desc"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

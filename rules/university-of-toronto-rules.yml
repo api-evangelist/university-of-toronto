@@ -1,0 +1,96 @@
+---
+x-generated: '2026-08-19'
+x-method: derived
+x-source: >-
+  Authored by API Evangelist against the observation-derived OpenAPI in
+  openapi/university-of-toronto-timetable-builder-openapi.yml. These are API Evangelist governance
+  rules applied TO the University of Toronto surface; they are not University of Toronto rules and
+  the University has published no ruleset.
+x-operator: institution
+rules:
+  version: 1
+  rules:
+    ttb-no-versioning:
+      description: >-
+        The Timetable Builder API carries no version anywhere — not in the path, not in a header,
+        not in a media type. A consumer has no way to pin behaviour.
+      severity: error
+      given: $.servers[*].url
+      then:
+        function: pattern
+        functionOptions:
+          match: '/v[0-9]+'
+    ttb-http-status-must-match-semantics:
+      description: >-
+        A search that matches nothing returns HTTP 404 with a null payload rather than 200 with an
+        empty collection, conflating "no such route" with "no such result".
+      severity: error
+      given: $.paths[*][*].responses
+      then:
+        field: '200'
+        function: truthy
+    ttb-error-shape-should-be-problem-json:
+      description: >-
+        Errors arrive in two incompatible shapes on two planes and neither is RFC 9457
+        application/problem+json.
+      severity: warn
+      given: $.components.schemas[?(@property.match(/Error|Status/))]
+      then:
+        field: description
+        function: truthy
+    ttb-time-encoding-should-be-iso8601:
+      description: >-
+        Meeting times are encoded as a weekday integer plus milliseconds since local midnight, with
+        no timezone. Every consumer must reimplement U of T's academic calendar to resolve a
+        meeting to an instant.
+      severity: error
+      given: $.components.schemas.DayTime
+      then:
+        field: description
+        function: truthy
+    ttb-booleans-should-be-boolean:
+      description: >-
+        cancelInd, waitlistInd, tbaInd and openLimitInd are transported as the characters Y and N
+        rather than as JSON booleans.
+      severity: warn
+      given: $.components.schemas.Section.properties[?(@property.match(/Ind$/))]
+      then:
+        field: type
+        function: pattern
+        functionOptions:
+          match: '^boolean$'
+    ttb-operations-must-be-deployed:
+      description: >-
+        Five operations declared in the shipping client bundle return 404 from the deployed
+        gateway. Only operations verified live on 2026-08-19 are described in this contract.
+      severity: error
+      given: $.paths
+      then:
+        function: truthy
+    ttb-no-published-terms:
+      description: >-
+        The API has no terms of use. info.termsOfService points at the University's general privacy
+        statement because nothing more specific exists, which is a gap, not a compliance signal.
+      severity: warn
+      given: $.info
+      then:
+        field: termsOfService
+        function: truthy
+    ttb-should-declare-rate-limits:
+      description: >-
+        getCourses returns a 12.9 MB body with no documented rate limit, no quota header and no
+        negotiated compression. Nothing tells a consumer what a fair call rate is.
+      severity: warn
+      given: $.paths['/getCourses'].post
+      then:
+        field: description
+        function: truthy
+    institution-surface-must-declare-operator:
+      description: >-
+        Every surface catalogued for a university must carry x-operator so a vendor's contract is
+        never scored as the institution's engineering.
+      severity: error
+      given: $.info
+      then:
+        field: x-operator
+        function: truthy

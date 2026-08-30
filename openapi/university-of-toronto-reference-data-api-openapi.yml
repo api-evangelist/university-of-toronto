@@ -1,0 +1,219 @@
+openapi: 3.2.0
+info:
+  title: University of Toronto Timetable Builder Reference Data API
+  version: '2026-08-19'
+  x-operator: institution
+  x-provenance:
+    generated: '2026-08-19'
+    method: derived
+    source: Derived by API Evangelist from live, unauthenticated probes of https://api.easi.utoronto.ca/ttb on 2026-08-19 and from the operation constants declared in the official Timetable Builder client bundle at https://ttb.utoronto.ca/main.934e36b03104594f.js. The University of Toronto does not publish an OpenAPI description for this API; this document is a third-party observation, not a University of Toronto artifact.
+  description: 'Unofficial, observation-derived description of the public JSON API behind the University of Toronto Timetable Builder (https://ttb.utoronto.ca), operated by Enterprise Applications and Solutions Integration (EASI) within U of T Information Technology Services. The host api.easi.utoronto.ca is under the University''s own registrable domain (utoronto.ca), which makes this one of the few genuinely institution-operated programmable surfaces at U of T.
+
+    The API serves course, section, meeting-time, instructor, enrolment-control and building data for the University''s academic timetable across all three campuses (St. George, Mississauga, Scarborough) and all divisions. No API key, token or other credential is required. The service sets Access-Control-Allow-Origin: https://ttb.utoronto.ca, so browser callers from other origins are blocked while server-to-server callers are not.
+
+    NOT AN OFFICIAL CONTRACT. The University publishes no developer portal, no terms of use for this API, no rate-limit statement and no versioning policy. Treat every shape here as observed behaviour that the University may change without notice.'
+  contact:
+    name: University of Toronto — Enterprise Applications and Solutions Integration (EASI)
+    url: https://easi.its.utoronto.ca/
+  termsOfService: https://www.utoronto.ca/privacy
+servers:
+- url: https://api.easi.utoronto.ca/ttb
+  description: Production Timetable Builder API (probed live 2026-08-19)
+tags:
+- name: Reference Data
+  description: Sessions, divisions, campuses and other search facets.
+paths:
+  /reference-data:
+    get:
+      tags:
+      - Reference Data
+      operationId: getReferenceData
+      summary: Retrieve every search facet the Timetable Builder UI offers
+      description: 'Returns the current sessions, divisions, campuses, degree requirements, course levels, delivery modes, day and time preferences, credit weights and sort directions. Verified live 2026-08-19: HTTP 200, application/json, ~11.7 KB.'
+      responses:
+        '200':
+          description: Reference data envelope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferenceDataEnvelope'
+              examples:
+                live:
+                  summary: Live capture, lists trimmed
+                  externalValue: ../examples/ttb-reference-data-response.json
+        '404':
+          $ref: '#/components/responses/GatewayNotFound'
+  /current-session:
+    get:
+      tags:
+      - Reference Data
+      operationId: getCurrentSession
+      summary: List the sessions currently open in the timetable
+      description: 'Returns the session options (for example "Summer 2026", value 20265) that a course search may be scoped to. Verified live 2026-08-19: HTTP 200, application/json.'
+      responses:
+        '200':
+          description: Session option list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionListEnvelope'
+              examples:
+                live:
+                  externalValue: ../examples/ttb-current-session-response.json
+        '404':
+          $ref: '#/components/responses/GatewayNotFound'
+  /getMatchingDivisions:
+    get:
+      tags:
+      - Reference Data
+      operationId: getMatchingDivisions
+      summary: Type-ahead lookup of academic divisions
+      description: Returns divisions whose name matches the supplied query, as option objects carrying the division code in `value` (for example APSC for the Faculty of Applied Science & Engineering). Verified live 2026-08-19 with query=arts.
+      parameters:
+      - name: query
+        in: query
+        required: true
+        description: Free-text fragment matched against division names.
+        schema:
+          type: string
+        example: arts
+      responses:
+        '200':
+          description: Matching divisions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionListEnvelope'
+              examples:
+                live:
+                  externalValue: ../examples/ttb-matching-divisions-response.json
+        '404':
+          $ref: '#/components/responses/GatewayNotFound'
+components:
+  schemas:
+    GatewayError:
+      type: object
+      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
+    OptionListEnvelope:
+      type: object
+      properties:
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatus'
+    Option:
+      type: object
+      description: A selectable facet value used by the Timetable Builder UI.
+      properties:
+        label:
+          type: string
+          example: Summer 2026
+        value:
+          type: string
+          example: '20265'
+        selected:
+          type: boolean
+        header:
+          type: boolean
+          description: True when the option is a non-selectable group heading.
+        group:
+          type:
+          - string
+          - 'null'
+          example: Summer-20265
+        metadata:
+          type: object
+          properties:
+            name:
+              type:
+              - string
+              - 'null'
+            type:
+              type:
+              - string
+              - 'null'
+    ApplicationStatus:
+      type: object
+      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
+      properties:
+        code:
+          type: integer
+          example: 4404
+        message:
+          type: string
+          example: No results found. Please try modifying your search criteria.
+    ReferenceDataEnvelope:
+      type: object
+      properties:
+        payload:
+          type: object
+          properties:
+            currentSessions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            divisions:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            campuses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            requirements:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            courseLevels:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            temporaryDeliveryModes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            deliveryModes:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            dayPreferences:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            timePreferences:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            creditWeights:
+              type: array
+              items:
+                $ref: '#/components/schemas/Option'
+            directions:
+              type: object
+              additionalProperties:
+                type: string
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatus'
+  responses:
+    GatewayNotFound:
+      description: The gateway did not match a route.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GatewayError'
+          examples:
+            live:
+              externalValue: ../examples/ttb-gateway-404-response.json

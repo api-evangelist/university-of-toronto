@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/json-schema/ttb-course.json",
+  "title": "University of Toronto Timetable Builder \u2014 Course",
+  "description": "One course offering as returned by https://api.easi.utoronto.ca/ttb. Observation-derived; not a University of Toronto artifact.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "Derived by API Evangelist from live responses of https://api.easi.utoronto.ca/ttb captured 2026-08-19. The University of Toronto publishes no JSON Schema for this API.",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": [
+    "code",
+    "name",
+    "campus",
+    "sessions",
+    "sections"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Opaque identifier, regenerated when the timetable is republished. Not a stable key.",
+      "examples": [
+        "69dd3ea4830c3634bbb69786"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "examples": [
+        "Introduction to Computer Programming"
+      ]
+    },
+    "ucName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "University College course name variant, usually null."
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}[0-9]{3}[A-Z][0-9]$",
+      "examples": [
+        "CSC108H1"
+      ]
+    },
+    "sectionCode": {
+      "type": "string",
+      "enum": [
+        "F",
+        "S",
+        "Y"
+      ],
+      "description": "F = fall, S = winter, Y = full year."
+    },
+    "campus": {
+      "type": "string",
+      "enum": [
+        "St. George",
+        "Mississauga",
+        "Scarborough"
+      ]
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{5}$"
+      },
+      "examples": [
+        [
+          "20269"
+        ]
+      ]
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "$ref": "ttb-section.json"
+      }
+    }
+  },
+  "additionalProperties": true
+}

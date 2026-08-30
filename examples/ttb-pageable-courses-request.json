@@ -1,0 +1,26 @@
+{
+  "courseCodeAndTitleProps": {
+    "courseCode": "CSC108H1",
+    "courseTitle": "",
+    "courseSectionCode": "",
+    "searchCourseDescription": true
+  },
+  "departmentProps": [],
+  "campuses": [],
+  "sessions": [
+    "20269"
+  ],
+  "requirementProps": [],
+  "instructor": "",
+  "courseLevels": [],
+  "deliveryModes": [],
+  "dayPreferences": [],
+  "timePreferences": [],
+  "divisions": [
+    "ARTSC"
+  ],
+  "creditWeights": [],
+  "page": 1,
+  "pageSize": 1,
+  "direction": "asc"
+}

@@ -1,0 +1,33 @@
+---
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probing of every institution-operated surface on 2026-08-19. Nothing here was inferred from a
+  vendor's generic scope vocabulary.
+x-operator: institution
+summary: >-
+  The University of Toronto publishes no OAuth scopes, because it publishes no OAuth authorization
+  server. This artifact records that absence explicitly rather than borrowing a vendor's scope list.
+scopes: []
+findings:
+  - surface: university-of-toronto:ttb-course-timetable
+    x-operator: institution
+    authorization_model: none
+    detail: >-
+      Every operation is unauthenticated and returns the same data to every caller. There is no
+      per-caller partitioning to scope.
+  - surface: university-of-toronto:utorauth-shibboleth-idp
+    x-operator: institution
+    authorization_model: SAML attribute release
+    detail: >-
+      The nearest analogue to a scope on U of T's surface is the SAML attribute bundle released to a
+      service provider, governed by the REFEDS Research & Scholarship entity category asserted in
+      the IdP metadata. R&S implies release of person identifier, name, email and affiliation. This
+      is an attribute-release policy, not an OAuth scope, and it is not enumerated per-SP in public
+      metadata.
+  - surface: university-of-toronto:tspace-dspace-rest
+    x-operator: tenant
+    authorization_model: vendor-defined
+    detail: >-
+      DSpace 8 authorization is the Scholaris platform's. Any scope vocabulary belongs to DSpace and
+      is not attributable to the University of Toronto.

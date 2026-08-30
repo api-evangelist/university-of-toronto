@@ -1,0 +1,367 @@
+{
+  "payload": {
+    "currentSessions": [
+      {
+        "label": "Summer 2026",
+        "value": "Summer",
+        "selected": false,
+        "header": true,
+        "group": "Summer-20265",
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Summer First Sub-Session 2026 (F)",
+        "value": "20265F",
+        "selected": false,
+        "header": false,
+        "group": "Summer-20265",
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Summer Second Sub-Session 2026 (S)",
+        "value": "20265S",
+        "selected": false,
+        "header": false,
+        "group": "Summer-20265",
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "divisions": [
+      {
+        "label": "Faculty of Applied Science & Engineering",
+        "value": "APSC",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Faculty of Arts and Science",
+        "value": "ARTSC",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Faculty of Information",
+        "value": "FIS",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "campuses": [
+      {
+        "label": "Scarborough",
+        "value": "Scarborough",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Mississauga",
+        "value": "University of Toronto at Mississauga",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "St. George",
+        "value": "St. George",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "requirements": [
+      {
+        "label": "Faculty of Applied Science & Engineering (ELECTIVE)",
+        "value": "APSC$ELECTIVE",
+        "selected": false,
+        "header": true,
+        "group": "APSC$ELECTIVE",
+        "metadata": {
+          "name": "APSC",
+          "type": "ELECTIVE"
+        }
+      },
+      {
+        "label": "Humanities & Social Sciences",
+        "value": "HSS",
+        "selected": false,
+        "header": false,
+        "group": "APSC$ELECTIVE",
+        "metadata": {
+          "name": "APSC",
+          "type": "ELECTIVE"
+        }
+      },
+      {
+        "label": "Complementary Studies",
+        "value": "CS",
+        "selected": false,
+        "header": false,
+        "group": "APSC$ELECTIVE",
+        "metadata": {
+          "name": "APSC",
+          "type": "ELECTIVE"
+        }
+      }
+    ],
+    "courseLevels": [
+      {
+        "label": "100/A",
+        "value": "100/A",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "200/B",
+        "value": "200/B",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "300/C",
+        "value": "300/C",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "temporaryDeliveryModes": [
+      {
+        "label": "In Person",
+        "value": "In Person",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Hybrid",
+        "value": "Hybrid",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Online Synchronous",
+        "value": "Online Synchronous",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "deliveryModes": [
+      {
+        "label": "In Person",
+        "value": "In Person",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Hybrid",
+        "value": "Hybrid",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Online Synchronous",
+        "value": "Online Synchronous",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "dayPreferences": [
+      {
+        "label": "Monday",
+        "value": "Monday",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Tuesday",
+        "value": "Tuesday",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Wednesday",
+        "value": "Wednesday",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "timePreferences": [
+      {
+        "label": "Morning (8am - 11:59am)",
+        "value": "Morning (8am - 11:59am)",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Afternoon (12pm - 4:59pm)",
+        "value": "Afternoon (12pm - 4:59pm)",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "Evening (5pm - 8:59pm)",
+        "value": "Evening (5pm - 8:59pm)",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "creditWeights": [
+      {
+        "label": "2.33",
+        "value": "2.33",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "2.00",
+        "value": "2.00",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      },
+      {
+        "label": "1.67",
+        "value": "1.67",
+        "selected": false,
+        "header": false,
+        "group": null,
+        "metadata": {
+          "name": null,
+          "type": null
+        }
+      }
+    ],
+    "directions": {
+      "asc": "asc",
+      "ASC": "ASC",
+      "DESC": "DESC",
+      "desc": "desc"
+    }
+  },
+  "status": [
+    {
+      "code": 0,
+      "message": "Success"
+    }
+  ],
+  "_truncated": "each reference-data list trimmed to the first 3 entries; full response is ~11.7 KB"
+}

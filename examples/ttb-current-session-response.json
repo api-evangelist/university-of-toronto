@@ -1,0 +1,98 @@
+{
+  "payload": [
+    {
+      "label": "Summer 2026",
+      "value": "Summer",
+      "selected": false,
+      "header": true,
+      "group": "Summer-20265",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Summer First Sub-Session 2026 (F)",
+      "value": "20265F",
+      "selected": false,
+      "header": false,
+      "group": "Summer-20265",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Summer Second Sub-Session 2026 (S)",
+      "value": "20265S",
+      "selected": false,
+      "header": false,
+      "group": "Summer-20265",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Summer Full Session 2026 (Y)",
+      "value": "20265",
+      "selected": false,
+      "header": false,
+      "group": "Summer-20265",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Fall-Winter 2026-2027",
+      "value": "Fall-Winter",
+      "selected": false,
+      "header": true,
+      "group": "FallWinter-20269-20271",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Fall 2026 (F)",
+      "value": "20269",
+      "selected": false,
+      "header": false,
+      "group": "FallWinter-20269-20271",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Winter 2027  (S)",
+      "value": "20271",
+      "selected": false,
+      "header": false,
+      "group": "FallWinter-20269-20271",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Fall-Winter 2026-2027 (Y)",
+      "value": "20269-20271",
+      "selected": false,
+      "header": false,
+      "group": "FallWinter-20269-20271",
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    }
+  ],
+  "status": [
+    {
+      "code": 0,
+      "message": "Success"
+    }
+  ]
+}

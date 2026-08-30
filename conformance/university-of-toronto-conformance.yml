@@ -1,0 +1,113 @@
+---
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes on 2026-08-19 against the education regime's domain standards. Reward-only: a standard
+  appears below only where a live response proved it, and every miss is recorded as a miss.
+x-operator: institution
+regime: education
+regime_standards_probed:
+  - scim
+  - lti
+  - oneroster
+  - ed-fi
+  - caliper
+  - qti
+  - oai-pmh
+  - shibboleth
+  - saml
+  - orcid
+  - datacite
+  - crossref
+conformance:
+  - standard: shibboleth
+    result: conformant
+    x-operator: institution
+    evidence:
+      url: https://idpz.utorauth.utoronto.ca/idp/shibboleth
+      status: 200
+      content_type: application/xml;charset=UTF-8
+      locator: >-
+        md:EntityDescriptor/@entityID = "https://idpz.utorauth.utoronto.ca/shibboleth";
+        md:Extensions/shibmd:Scope declares the utoronto.ca scope; the document header names the
+        Shibboleth IdP git repository it is generated from.
+      note: >-
+        A Shibboleth Identity Provider operated by the University on its own utorauth.utoronto.ca
+        host. Institution-operated by definition.
+  - standard: saml
+    result: conformant
+    x-operator: institution
+    evidence:
+      url: https://idpz.utorauth.utoronto.ca/idp/shibboleth
+      status: 200
+      locator: >-
+        Root element md:EntityDescriptor in namespace urn:oasis:names:tc:SAML:2.0:metadata, carrying
+        mdrpi:RegistrationInfo with registrationAuthority="http://www.canarie.ca" (Canadian Access
+        Federation), registrationInstant 2018-09-21T12:57:00Z, plus mdattr:EntityAttributes
+        asserting http://refeds.org/category/research-and-scholarship and
+        https://refeds.org/sirtfi.
+      note: >-
+        SAML 2.0 metadata published in a national federation. This is the strongest machine-readable
+        standards claim the University makes anywhere on its public surface.
+  - standard: oai-pmh
+    result: conformant
+    x-operator: tenant
+    evidence:
+      url: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
+      status: 200
+      content_type: text/xml;charset=UTF-8
+      locator: >-
+        OAI-PMH/Identify/repositoryName = "TSpace";
+        OAI-PMH/Identify/protocolVersion = "2.0";
+        OAI-PMH/Identify/adminEmail = "tspace@library.utoronto.ca";
+        OAI-PMH/Identify/earliestDatestamp = "2003-03-24T13:58:30Z";
+        oai-identifier/repositoryIdentifier = "utoronto.scholaris.ca".
+      note: >-
+        The repository is the University's (TSpace, U of T Libraries, admin contact on
+        library.utoronto.ca) but the endpoint runs on Scholaris, the OCUL-operated DSpace service.
+        Credited to the University as an institutional repository it operates, NOT as an OAI-PMH
+        implementation it engineered. The vanity host tspace.library.utoronto.ca 302-redirects here.
+  - standard: scim
+    result: not-found
+    evidence:
+      note: >-
+        No SCIM endpoint discoverable on any utoronto.ca host. Identity provisioning at U of T runs
+        behind UTORid and is not publicly exposed.
+  - standard: lti
+    result: not-found
+    evidence:
+      note: >-
+        The University runs Quercus (Instructure Canvas) as its LMS. Canvas is an LTI 1.3 platform,
+        but that conformance is Instructure's engineering on a vendor contract, not the
+        University's, and no LTI registration or platform configuration is published on a
+        utoronto.ca host.
+  - standard: oneroster
+    result: not-found
+  - standard: ed-fi
+    result: not-found
+  - standard: caliper
+    result: not-found
+  - standard: qti
+    result: not-found
+  - standard: orcid
+    result: not-found
+    evidence:
+      note: >-
+        U of T researchers hold ORCID iDs and the DSpace repository carries ORCID-capable metadata
+        fields, but no ORCID-conformant machine-readable surface is published on a
+        utoronto.ca-controlled host, and the repository host is a tenant surface.
+  - standard: datacite
+    result: not-found
+    evidence:
+      note: >-
+        DOI minting for U of T deposits runs through Borealis / Scholars Portal and through
+        publishers; the DataCite membership and API relationship is theirs, not the University's.
+  - standard: crossref
+    result: not-found
+summary: >-
+  Three hits, two of them institution-operated and both in identity federation. The University of
+  Toronto's only first-party standards conformance is SAML 2.0 / Shibboleth in the Canadian Access
+  Federation. Its OAI-PMH conformance is real but runs on a consortium platform and is recorded as
+  tenant. Every education-regime standard that touches teaching and learning data — LTI, OneRoster,
+  Caliper, QTI, Ed-Fi — is absent from the public surface, which is the expected shape for an
+  institution that buys its LMS and SIS rather than building them.

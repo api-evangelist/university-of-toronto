@@ -1,0 +1,98 @@
+{
+  "payload": [
+    {
+      "label": "Faculty of Applied Science & Engineering",
+      "value": "APSC",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Faculty of Arts and Science",
+      "value": "ARTSC",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Faculty of Information",
+      "value": "FIS",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Faculty of Kinesiology and Physical Education",
+      "value": "FPEH",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "Faculty of Music",
+      "value": "MUSIC",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "John H. Daniels Faculty of Architecture, Landscape, & Design",
+      "value": "ARCLA",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "University of Toronto Mississauga",
+      "value": "ERIN",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    },
+    {
+      "label": "University of Toronto Scarborough",
+      "value": "SCAR",
+      "selected": false,
+      "header": false,
+      "group": null,
+      "metadata": {
+        "name": null,
+        "type": null
+      }
+    }
+  ],
+  "status": [
+    {
+      "code": 0,
+      "message": "Success"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+---
+generated: '2026-08-19'
+method: probed
+source: >-
+  Observed live from https://api.easi.utoronto.ca/ttb on 2026-08-19. The University of Toronto
+  publishes no error reference for this API; every entry below is an observation, and the catalogue
+  is therefore incomplete by construction.
+x-operator: institution
+api: university-of-toronto:ttb-course-timetable
+summary: >-
+  The Timetable Builder API returns errors on two different planes and does not distinguish them by
+  HTTP status. The api.easi.utoronto.ca gateway emits {"statusCode","message"} for an unmatched
+  route; the TTB service itself emits {"payload":null,"status":[{"code","message"}]} for a search
+  that matched nothing. Both arrive as HTTP 404, so a client cannot tell "you asked for a URL that
+  does not exist" from "your search found nothing" without parsing the body.
+planes:
+  - plane: gateway
+    shape: '{"statusCode": <int>, "message": <string>}'
+    content_type: application/json
+    observed:
+      - status: 404
+        body: '{ "statusCode": 404, "message": "Resource not found" }'
+        triggered_by:
+          - GET https://api.easi.utoronto.ca/
+          - GET https://api.easi.utoronto.ca/ttb/health
+          - GET https://api.easi.utoronto.ca/ttb/v3/api-docs
+          - POST https://api.easi.utoronto.ca/ttb/getMatchingDepartments
+        note: >-
+          Several operation names declared in the official client bundle return this — the bundle
+          names them but the deployed gateway does not route them.
+  - plane: application
+    shape: '{"payload": null, "status": [{"code": <int>, "message": <string>}]}'
+    content_type: application/json
+    observed:
+      - status: 404
+        code: 4404
+        message: Please try modifying your search criteria.
+        triggered_by:
+          - POST /ttb/getPageableCourses with sessions=["20259"] and division ARTSC
+        note: >-
+          Returned when the faceted search matches zero courses. An empty result is signalled as an
+          error rather than an empty collection.
+content_negotiation:
+  - note: >-
+      Without an Accept header the same operations return an XML <TTBResponse> envelope carrying the
+      same status block. Errors therefore have two wire formats.
+    observed: '<TTBResponse><payload/><status><status><code>4404</code><message>...</message></status></status></TTBResponse>'
+gaps:
+  - No published error reference, code catalogue, or retry guidance.
+  - No RFC 9457 / problem+json anywhere on the surface.
+  - No correlation identifier in the error body; the gateway returns a Request-Context header only.
+  - No 4xx observed other than 404 — authentication and rate-limit error shapes are unknown because
+    the surface requires no credential and no limit was reached during probing.

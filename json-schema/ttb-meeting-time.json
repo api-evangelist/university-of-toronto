@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/json-schema/ttb-meeting-time.json",
+  "title": "University of Toronto Timetable Builder \u2014 Meeting Time",
+  "description": "A single scheduled meeting. Note the non-standard time encoding: weekday index plus milliseconds since local midnight, with no timezone and no ISO-8601 field anywhere.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "Derived by API Evangelist from live responses of https://api.easi.utoronto.ca/ttb captured 2026-08-19. The University of Toronto publishes no JSON Schema for this API.",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "properties": {
+    "start": {
+      "$ref": "#/$defs/dayTime"
+    },
+    "end": {
+      "$ref": "#/$defs/dayTime"
+    },
+    "building": {
+      "type": "object",
+      "properties": {
+        "buildingCode": {
+          "type": "string",
+          "examples": [
+            "SF",
+            "BA"
+          ]
+        },
+        "buildingRoomNumber": {
+          "type": "string"
+        },
+        "buildingRoomSuffix": {
+          "type": "string"
+        },
+        "buildingUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Deep link into https://map.utoronto.ca.",
+          "examples": [
+            "https://map.utoronto.ca/?id=1809#!m/494481"
+          ]
+        },
+        "buildingName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "sessionCode": {
+      "type": "string",
+      "pattern": "^[0-9]{5}$"
+    },
+    "repetition": {
+      "type": "string",
+      "examples": [
+        "WEEKLY"
+      ]
+    },
+    "repetitionTime": {
+      "type": "string",
+      "examples": [
+        "ONCE_A_WEEK",
+        "TWICE_A_WEEK"
+      ]
+    }
+  },
+  "$defs": {
+    "dayTime": {
+      "type": "object",
+      "properties": {
+        "day": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7,
+          "description": "Weekday index. Observed 1 = Monday."
+        },
+        "millisofday": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 86400000,
+          "description": "Milliseconds since local midnight. 43200000 = 12:00."
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

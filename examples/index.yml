@@ -1,0 +1,37 @@
+---
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live, unauthenticated HTTP captures of https://api.easi.utoronto.ca/ttb taken on 2026-08-19.
+  Bodies are verbatim University of Toronto responses, trimmed only where noted in the file's
+  own _truncated key. No value in any file was invented.
+x-operator: institution
+examples:
+  - file: ttb-reference-data-response.json
+    request: GET https://api.easi.utoronto.ca/ttb/reference-data
+    status: 200
+    note: Lists trimmed to the first three entries each; full body ~11.7 KB.
+  - file: ttb-current-session-response.json
+    request: GET https://api.easi.utoronto.ca/ttb/current-session
+    status: 200
+    note: Verbatim.
+  - file: ttb-matching-divisions-response.json
+    request: GET https://api.easi.utoronto.ca/ttb/getMatchingDivisions?query=arts
+    status: 200
+    note: Verbatim.
+  - file: ttb-pageable-courses-request.json
+    request: POST https://api.easi.utoronto.ca/ttb/getPageableCourses (body)
+    status: 200
+    note: The exact body that produced ttb-pageable-courses-response.json.
+  - file: ttb-pageable-courses-response.json
+    request: POST https://api.easi.utoronto.ca/ttb/getPageableCourses
+    status: 200
+    note: Trimmed to one course and one section; divisional legend HTML abbreviated.
+  - file: ttb-no-results-response.json
+    request: POST https://api.easi.utoronto.ca/ttb/getPageableCourses with an unmatched session
+    status: 404
+    note: Business-level miss — HTTP 404 with a null payload and status code 4404.
+  - file: ttb-gateway-404-response.json
+    request: GET https://api.easi.utoronto.ca/ttb/health
+    status: 404
+    note: Gateway route miss. Distinguishable from the business miss only by body shape.

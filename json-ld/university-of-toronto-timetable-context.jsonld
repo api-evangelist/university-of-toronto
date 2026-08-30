@@ -1,0 +1,53 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "ttb": "https://api.easi.utoronto.ca/ttb/ns#",
+    "Course": "schema:Course",
+    "CourseInstance": "schema:CourseInstance",
+    "Place": "schema:Place",
+    "code": "schema:courseCode",
+    "name": "schema:name",
+    "campus": {
+      "@id": "schema:location",
+      "@type": "@id"
+    },
+    "sessions": {
+      "@id": "ttb:session",
+      "@container": "@set"
+    },
+    "sectionCode": "ttb:sectionCode",
+    "sections": {
+      "@id": "schema:hasCourseInstance",
+      "@container": "@set"
+    },
+    "teachMethod": "schema:courseMode",
+    "instructors": {
+      "@id": "schema:instructor",
+      "@container": "@set"
+    },
+    "maxEnrolment": "schema:maximumAttendeeCapacity",
+    "currentEnrolment": "ttb:currentEnrolment",
+    "currentWaitlist": "ttb:currentWaitlist",
+    "meetingTimes": {
+      "@id": "schema:eventSchedule",
+      "@container": "@set"
+    },
+    "building": {
+      "@id": "schema:location",
+      "@type": "@id"
+    },
+    "buildingCode": "schema:identifier",
+    "buildingUrl": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "millisofday": "ttb:millisOfDay",
+    "day": "schema:dayOfWeek",
+    "repetition": "schema:repeatFrequency",
+    "notes": {
+      "@id": "schema:disambiguatingDescription",
+      "@container": "@set"
+    }
+  }
+}

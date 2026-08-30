@@ -1,0 +1,242 @@
+{
+  "payload": {
+    "pageableCourse": {
+      "courses": [
+        {
+          "id": "69dd3ea4830c3634bbb69786",
+          "name": "Mathematics of Finance for Non-Actuaries",
+          "ucName": null,
+          "code": "ACT230H1",
+          "sectionCode": "F",
+          "campus": "St. George",
+          "sessions": [
+            "20269"
+          ],
+          "sections": [
+            {
+              "name": "TUT0102",
+              "type": "Tutorial",
+              "teachMethod": "TUT",
+              "sectionNumber": "0102",
+              "meetingTimes": [
+                {
+                  "start": {
+                    "day": 5,
+                    "millisofday": 43200000
+                  },
+                  "end": {
+                    "day": 5,
+                    "millisofday": 46800000
+                  },
+                  "building": {
+                    "buildingCode": "SF",
+                    "buildingRoomNumber": "",
+                    "buildingRoomSuffix": "",
+                    "buildingUrl": "https://map.utoronto.ca/?id=1809#!m/494481",
+                    "buildingName": null
+                  },
+                  "sessionCode": "20269",
+                  "repetition": "WEEKLY",
+                  "repetitionTime": "ONCE_A_WEEK"
+                }
+              ],
+              "firstMeeting": null,
+              "instructors": [],
+              "currentEnrolment": 8,
+              "maxEnrolment": 60,
+              "subTitle": "",
+              "cancelInd": "N",
+              "waitlistInd": "N",
+              "deliveryModes": [
+                {
+                  "session": "20269",
+                  "mode": "INPER"
+                }
+              ],
+              "currentWaitlist": 0,
+              "enrolmentInd": "",
+              "tbaInd": "N",
+              "openLimitInd": "N",
+              "notes": [
+                {
+                  "name": "Section Note",
+                  "type": "SECTION",
+                  "content": ""
+                }
+              ],
+              "enrolmentControls": [
+                {
+                  "yearOfStudy": "*",
+                  "post": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "subject": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "subjectPost": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "typeOfProgram": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "designation": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "primaryOrg": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "associatedOrg": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "secondOrg": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "adminOrg": {
+                    "code": "*",
+                    "name": "All"
+                  },
+                  "collaborativeOrgGroupCode": "*",
+                  "quantity": 60,
+                  "sequence": 1
+                }
+              ],
+              "linkedMeetingSections": null
+            }
+          ],
+          "duration": null,
+          "cmCourseInfo": {
+            "description": "Introduction to financial mathematics, interest measurement, present value calculation, annuity valuation, loan amortization, consumer financing arrangements, bond valuation. The course is aimed at a general audience who will not be continuing in the actuarial science program. Course manuals fee: $30.",
+            "title": "Mathematics of Finance for Non-Actuaries",
+            "levelOfInstruction": "undergraduate",
+            "prerequisitesText": "First-year Calculus",
+            "corequisitesText": "",
+            "exclusionsText": "ACT240H1",
+            "recommendedPreparation": "",
+            "note": null,
+            "division": "Arts and Science, Faculty of",
+            "breadthRequirements": [
+              "The Physical and Mathematical Universes (5)"
+            ],
+            "distributionRequirements": [
+              "Science"
+            ],
+            "publicationSections": [
+              "Actuarial Science"
+            ],
+            "cmPublicationSections": [
+              {
+                "section": "Actuarial Science",
+                "subSections": null
+              }
+            ]
+          },
+          "created": "2026-08-19@21:29:45.545",
+          "modified": null,
+          "lastSaved": 0,
+          "primaryTeachMethod": "LEC",
+          "faculty": {
+            "code": "ARTSC",
+            "name": "Faculty of Arts and Science"
+          },
+          "coSec": {
+            "code": "",
+            "name": null
+          },
+          "department": {
+            "code": "STAT",
+            "name": "Department of Statistical Sciences"
+          },
+          "title": null,
+          "maxCredit": 0.5,
+          "minCredit": 0.5,
+          "breadths": [
+            {
+              "org": {
+                "code": "ERIN",
+                "name": "University of Toronto Mississauga"
+              },
+              "breadthTypes": [
+                {
+                  "kind": "DISTRIBUTION",
+                  "type": "Science",
+                  "description": "Science",
+                  "code": "Sci"
+                }
+              ]
+            },
+            {
+              "org": {
+                "code": "SCAR",
+                "name": "University of Toronto Scarborough"
+              },
+              "breadthTypes": []
+            },
+            {
+              "org": {
+                "code": "ARTSC",
+                "name": "Faculty of Arts and Science"
+              },
+              "breadthTypes": [
+                {
+                  "kind": "BREADTH",
+                  "type": "Physical Universe",
+                  "description": "BR=5 The Physical and Mathematical Universes",
+                  "code": "BR=5"
+                }
+              ]
+            }
+          ],
+          "notes": [
+            {
+              "name": "Course Note",
+              "type": "COURSE",
+              "content": "<p><strong>Timetable Instructions</strong></p><p><p>Tutorial Enrolment Instructions:</p><ul><li>Tutorial enrolment is mandatory in this course</li><li>Students must enrol in a tutorial section at the same time they enrol</li></ul></p>"
+            }
+          ],
+          "cancelInd": "N",
+          "subscriptionTtb": false,
+          "subscriptionOpenData": false,
+          "tb1Active": false,
+          "tb2Active": false,
+          "fullyOnline": false,
+          "primaryFull": false,
+          "primaryWaitlistable": false
+        }
+      ],
+      "total": 1671,
+      "page": 1,
+      "pageSize": 20,
+      "direction": null
+    },
+    "divisionalLegends": {
+      "ARTSC": "<table>... legend HTML truncated for readability ...</table>"
+    },
+    "divisionalEnrolmentIndicators": {
+      "ARTSC": [
+        {
+          "code": "E",
+          "name": "Enrolment via ACORN is not available. Students must request permission to enrol in this course by contacting the sponsoring department"
+        },
+        {
+          "code": "R1",
+          "name": "Restricted: Course/section is restricted at all times for specific students."
+        }
+      ]
+    }
+  },
+  "status": [
+    {
+      "code": 0,
+      "message": "Success"
+    }
+  ],
+  "_truncated": "trimmed to one course, one section, and abbreviated divisional legends; captured live 2026-08-19"
+}

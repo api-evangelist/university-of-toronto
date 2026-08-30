@@ -1,0 +1,63 @@
+---
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of https://api.easi.utoronto.ca/ttb and
+  https://idpz.utorauth.utoronto.ca/idp/shibboleth on 2026-08-19, plus the SAML 2.0 metadata that
+  endpoint serves.
+x-operator: institution
+summary: >-
+  The University of Toronto operates two entirely separate authentication stories, and neither is a
+  developer-facing one. The public Timetable Builder API requires no credential at all. Everything
+  the University actually gates — ACORN, Quercus, library resources, Microsoft 365 — is gated behind
+  UTORid via a SAML 2.0 Shibboleth identity provider registered in the Canadian Access Federation.
+  There is no OAuth authorization server, no API key issuance, no client registration, and no
+  developer account of any kind.
+surfaces:
+  - api: university-of-toronto:ttb-course-timetable
+    host: api.easi.utoronto.ca
+    x-operator: institution
+    scheme: none
+    verified: '2026-08-19'
+    evidence:
+      - url: https://api.easi.utoronto.ca/ttb/reference-data
+        status: 200
+        note: 200 with no Authorization header, no cookie, no API key.
+    browser_restriction:
+      header: 'Access-Control-Allow-Origin: https://ttb.utoronto.ca'
+      note: >-
+        CORS is pinned to the official UI origin, so a browser-based third-party client is blocked
+        while a server-side client is not. This is an origin restriction, not authentication, and it
+        is the only access control observed on the surface.
+  - api: university-of-toronto:utorauth-shibboleth-idp
+    host: idpz.utorauth.utoronto.ca
+    x-operator: institution
+    scheme: SAML 2.0 Web Browser SSO (Shibboleth IdP)
+    entity_id: https://idpz.utorauth.utoronto.ca/shibboleth
+    verified: '2026-08-19'
+    evidence:
+      - url: https://idpz.utorauth.utoronto.ca/idp/shibboleth
+        status: 200
+        note: >-
+          Serves a signed md:EntityDescriptor. Registration authority http://www.canarie.ca
+          (Canadian Access Federation), registered 2018-09-21.
+    entity_categories:
+      - http://refeds.org/category/research-and-scholarship
+    assurance:
+      - https://refeds.org/sirtfi
+    note: >-
+      This is a federation login endpoint for humans in a browser, not an API authorization server.
+      It is catalogued because it is machine-readable, institution-operated, and the University's
+      only published conformance to an identity standard.
+  - api: university-of-toronto:tspace-dspace-rest
+    host: utoronto.scholaris.ca
+    x-operator: tenant
+    scheme: DSpace 8 authn endpoint (/server/api/authn), vendor-defined
+    verified: '2026-08-19'
+    note: >-
+      The authentication design here is the Scholaris/DSpace platform's, not the University's. Read
+      access to the repository requires no credential.
+gaps:
+  - No OAuth 2.0 or OpenID Connect surface published for third-party developers.
+  - No API key programme, developer registration, or client credential issuance.
+  - No published authentication documentation for any institution-operated API.

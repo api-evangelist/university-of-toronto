@@ -1,0 +1,84 @@
+---
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes on 2026-08-19 plus the operation constants in the official Timetable Builder client
+  bundle at https://ttb.utoronto.ca/main.934e36b03104594f.js.
+x-operator: institution
+summary: >-
+  The University of Toronto operates its programmable surfaces as application back-ends, not as
+  products. There is no versioning scheme, no deprecation policy, no changelog and no status page
+  for any of them, and the strongest available lifecycle signal is negative: operations that the
+  official client still names have already been removed from the deployed gateway.
+surfaces:
+  - api: university-of-toronto:ttb-course-timetable
+    x-operator: institution
+    versioning:
+      scheme: none
+      detail: >-
+        No version segment in the path, no version header, no media-type versioning. The base path
+        is /ttb and has no successor.
+    deprecation:
+      policy: none-published
+      observed_drift:
+        - operation: getMatchingDepartments
+          declared_in_client: true
+          deployed: false
+          status: 404
+        - operation: getMatchingCourseTitles
+          declared_in_client: true
+          deployed: false
+          status: 404
+        - operation: getOptimizedMatchingCourseTitles
+          declared_in_client: true
+          deployed: false
+          status: 404
+        - operation: findById
+          declared_in_client: true
+          deployed: false
+          status: 404
+        - operation: getCoursesByCodeAndSectionCode/{code}/{sectionCode}
+          declared_in_client: true
+          deployed: false
+          status: 404
+          note: The single-segment form /{code} is live; the two-segment form is not.
+      detail: >-
+        Five operation names declared in the shipping client bundle return the gateway's
+        "Resource not found". Operations are withdrawn without notice and without a sunset header.
+    stability:
+      identifiers: unstable
+      detail: >-
+        Course `id` values are opaque and observed to be regenerated when the timetable is
+        republished. Course `code` plus `sectionCode` plus session is the only durable key.
+    non_production_hosts:
+      - host: ttb-dev.easi.utoronto.ca
+        note: >-
+          Referenced in the production client bundle. Recorded here as a lifecycle observation only;
+          it is NOT catalogued as a surface.
+  - api: university-of-toronto:tspace-oai-pmh
+    x-operator: tenant
+    versioning:
+      scheme: protocol
+      detail: OAI-PMH protocolVersion 2.0, fixed by the standard rather than by the University.
+    migration:
+      from: tspace.library.utoronto.ca (institution-hosted DSpace)
+      to: utoronto.scholaris.ca (OCUL Scholaris, DSpace 8.4)
+      evidence:
+        - url: https://tspace.library.utoronto.ca/server/oai/request?verb=Identify
+          status: 302
+          redirect_to: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
+      note: >-
+        The migration moved the operator, not just the host. This is the single most consequential
+        lifecycle event on U of T's programmable surface and it moved a surface OUT of institutional
+        operation.
+  - api: cobalt
+    x-operator: none
+    status: retired
+    detail: >-
+      The community-built Cobalt open-data API (courses, buildings, food, athletics, parking) was
+      archived in 2020. Its endpoint https://cobalt.qas.im/1.0/courses returned HTTP 404 on
+      2026-08-19. It was never institution-operated and is no longer catalogued as a surface.
+gaps:
+  - No status page, uptime feed, or incident history for any API.
+  - No changelog or release notes.
+  - No sunset or deprecation headers observed on any response.
