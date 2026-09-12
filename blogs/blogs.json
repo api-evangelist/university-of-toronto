@@ -2,20 +2,20 @@
   "repo": "university-of-toronto",
   "feeds": [
     {
-      "source": "https://library.utoronto.ca/",
-      "feed_url": "https://library.utoronto.ca/",
+      "source": "https://www.utoronto.ca/campus-status",
+      "feed_url": "https://www.utoronto.ca/campus-status",
       "title": "",
       "saved": 0,
       "method": "none"
     },
     {
-      "source": "https://www.utoronto.ca/campus-status",
-      "feed_url": "https://www.utoronto.ca/campus-status",
+      "source": "https://library.utoronto.ca/",
+      "feed_url": "https://library.utoronto.ca/",
       "title": "",
       "saved": 0,
       "method": "none"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-08-30T22:33:40Z"
+  "fetched": "2026-09-06T19:17:18Z"
 }
