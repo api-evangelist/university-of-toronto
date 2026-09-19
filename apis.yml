@@ -85,6 +85,13 @@ apis:
   - Identity Federation
   - SAML
   - Shibboleth
+  - SSO
+  - Education
+  - Metadata
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - Shibboleth
   - Single Sign-On
   - Education
   - Metadata
@@ -114,6 +121,14 @@ apis:
   - Library
   - Metadata
   - Research
+  - Tenants
+  tags_raw:
+  - OAI-PMH
+  - Institutional Repository
+  - DSpace
+  - Library
+  - Metadata
+  - Research
   - Tenant
   properties:
   - type: Documentation
@@ -137,6 +152,13 @@ apis:
   - Institutional Repository
   - Library
   - Research
+  - Tenants
+  tags_raw:
+  - REST
+  - DSpace
+  - Institutional Repository
+  - Library
+  - Research
   - Tenant
   properties:
   - type: Documentation
@@ -153,6 +175,12 @@ apis:
     the collection, the curation and the deposits. No Dataverse specification is saved under this institution.
   humanURL: https://borealisdata.ca/dataverse/toronto
   tags:
+  - Research Data
+  - Dataverse
+  - Repository
+  - Open Data
+  - Tenants
+  tags_raw:
   - Research Data
   - Dataverse
   - Repository
