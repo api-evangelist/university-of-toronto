@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Toronto
 providerId: university-of-toronto
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
@@ -21,6 +21,14 @@ notes: >-
   No published per-seat or per-call commercial pricing. "Free / Open" reflects open
   public endpoints; "Affiliation / Credentialed" reflects access gated by institutional
   identity rather than payment.
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes on 2026-08-19. Confirmed: the institution-operated Timetable Builder API requires no
+  credential, no registration and no payment; there is no developer portal, no sign-up and no
+  commercial plan anywhere on the University's public surface. Credentialed access runs through
+  UTORid via the UTORauth Shibboleth IdP, which is institutional affiliation rather than a plan.
+x-operator: institution
 sources:
 - https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/apis.yml
 plans:

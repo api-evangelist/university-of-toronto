@@ -1,0 +1,24 @@
+---
+generated: '2026-08-19'
+x-operator: institution
+note: >-
+  The University of Toronto publishes no JSON-LD context of its own. Both files here are API
+  Evangelist mappings; the uoft: and ttb: namespace prefixes they declare are placeholders that
+  resolve to nothing and must not be read as University-published vocabulary.
+contexts:
+  - file: university-of-toronto-context.jsonld
+    generated: '2026-06-03'
+    method: derived
+    source: >-
+      Derived by API Evangelist from the University's institutional-repository and organisational
+      description. Not published by the University. The uoft: prefix
+      (https://www.utoronto.ca/ns#) is a local placeholder, not a namespace U of T serves.
+  - file: university-of-toronto-timetable-context.jsonld
+    generated: '2026-08-19'
+    method: derived
+    source: >-
+      Derived by API Evangelist from the live response shapes of
+      https://api.easi.utoronto.ca/ttb (captured 2026-08-19), mapping the Timetable Builder course,
+      section, meeting-time and building fields onto schema.org Course / CourseInstance / Place.
+      Fields with no schema.org equivalent (millisofday, sectionCode, enrolment counters) are held
+      in a local ttb: placeholder prefix.

@@ -4,19 +4,32 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: University of Toronto
 providerId: university-of-toronto
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reconciled: false
 tags:
 - Education
 - Higher Education
 - University
 - Rate Limiting
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of https://api.easi.utoronto.ca/ttb and the TSpace OAI-PMH endpoint on 2026-08-19.
+  No rate-limit header, quota header or Retry-After was returned on any successful response, and
+  the University publishes no rate-limit statement for any API.
+x-operator: institution
 description: >-
-  University of Toronto does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+  The University of Toronto publishes no rate limits for any of its APIs. On 2026-08-19 the
+  institution-operated Timetable Builder API at api.easi.utoronto.ca returned HTTP 200 to every
+  probe with no X-RateLimit-*, no Retry-After and no quota signalling of any kind, including for
+  POST /ttb/getCourses which returns a 12.9 MB uncompressed body. The absence of a stated limit is
+  not permission for volume: treat the surface as an unmetered application back-end, prefer
+  getPageableCourses over getCourses, and expect no warning before throttling or blocking. Tenant
+  surfaces on Scholaris and Borealis are governed by those platforms' policies, not the
+  University's.
+notes: >-
+  No limit is documented and none was observed. Any figure below is guidance from API Evangelist,
+  not a University of Toronto commitment.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/apis.yml
 responseCodes:
@@ -25,8 +38,11 @@ limits:
 - name: Default
   scope: client
   metric: requests-per-minute
-  limit: see service documentation
-  notes: No published global limit; large harvests may be rate-limited.
+  limit: none-published
+  observed: no rate-limit or quota header on any 200 response probed 2026-08-19
+  notes: >-
+    No published global limit and no observed enforcement. Harvest conservatively; the surface is an
+    application back-end for a single official UI, not a metered product.
 policies:
 - name: Backoff Strategy
   description: Exponential backoff with jitter; honor Retry-After; harvest during off-peak hours.

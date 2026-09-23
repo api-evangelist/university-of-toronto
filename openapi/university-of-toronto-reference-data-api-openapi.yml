@@ -7,11 +7,7 @@ info:
     generated: '2026-08-19'
     method: derived
     source: Derived by API Evangelist from live, unauthenticated probes of https://api.easi.utoronto.ca/ttb on 2026-08-19 and from the operation constants declared in the official Timetable Builder client bundle at https://ttb.utoronto.ca/main.934e36b03104594f.js. The University of Toronto does not publish an OpenAPI description for this API; this document is a third-party observation, not a University of Toronto artifact.
-  description: 'Unofficial, observation-derived description of the public JSON API behind the University of Toronto Timetable Builder (https://ttb.utoronto.ca), operated by Enterprise Applications and Solutions Integration (EASI) within U of T Information Technology Services. The host api.easi.utoronto.ca is under the University''s own registrable domain (utoronto.ca), which makes this one of the few genuinely institution-operated programmable surfaces at U of T.
-
-    The API serves course, section, meeting-time, instructor, enrolment-control and building data for the University''s academic timetable across all three campuses (St. George, Mississauga, Scarborough) and all divisions. No API key, token or other credential is required. The service sets Access-Control-Allow-Origin: https://ttb.utoronto.ca, so browser callers from other origins are blocked while server-to-server callers are not.
-
-    NOT AN OFFICIAL CONTRACT. The University publishes no developer portal, no terms of use for this API, no rate-limit statement and no versioning policy. Treat every shape here as observed behaviour that the University may change without notice.'
+  description: Unofficial, observation-derived description of the public JSON API behind the University of Toronto Timetable Builder (https://ttb.utoronto.ca), operated by Enterprise Applications and Solutions Integration (EASI) within U of T Information Technology Services.
   contact:
     name: University of Toronto — Enterprise Applications and Solutions Integration (EASI)
     url: https://easi.its.utoronto.ca/
@@ -91,16 +87,16 @@ paths:
           $ref: '#/components/responses/GatewayNotFound'
 components:
   schemas:
-    GatewayError:
+    ApplicationStatus:
       type: object
-      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
+      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
       properties:
-        statusCode:
+        code:
           type: integer
-          example: 404
+          example: 4404
         message:
           type: string
-          example: Resource not found
+          example: No results found. Please try modifying your search criteria.
     OptionListEnvelope:
       type: object
       properties:
@@ -112,47 +108,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationStatus'
-    Option:
-      type: object
-      description: A selectable facet value used by the Timetable Builder UI.
-      properties:
-        label:
-          type: string
-          example: Summer 2026
-        value:
-          type: string
-          example: '20265'
-        selected:
-          type: boolean
-        header:
-          type: boolean
-          description: True when the option is a non-selectable group heading.
-        group:
-          type:
-          - string
-          - 'null'
-          example: Summer-20265
-        metadata:
-          type: object
-          properties:
-            name:
-              type:
-              - string
-              - 'null'
-            type:
-              type:
-              - string
-              - 'null'
-    ApplicationStatus:
-      type: object
-      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
-      properties:
-        code:
-          type: integer
-          example: 4404
-        message:
-          type: string
-          example: No results found. Please try modifying your search criteria.
     ReferenceDataEnvelope:
       type: object
       properties:
@@ -207,6 +162,47 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationStatus'
+    Option:
+      type: object
+      description: A selectable facet value used by the Timetable Builder UI.
+      properties:
+        label:
+          type: string
+          example: Summer 2026
+        value:
+          type: string
+          example: '20265'
+        selected:
+          type: boolean
+        header:
+          type: boolean
+          description: True when the option is a non-selectable group heading.
+        group:
+          type:
+          - string
+          - 'null'
+          example: Summer-20265
+        metadata:
+          type: object
+          properties:
+            name:
+              type:
+              - string
+              - 'null'
+            type:
+              type:
+              - string
+              - 'null'
+    GatewayError:
+      type: object
+      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
   responses:
     GatewayNotFound:
       description: The gateway did not match a route.

@@ -3,51 +3,125 @@ name: University of Toronto
 description: University of Toronto public developer/API footprint review for APIs.json cataloging.
 url: https://raw.githubusercontent.com/api-evangelist/university-of-toronto/refs/heads/main/review.yml
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 reviews:
-  - date: '2026-06-03'
-    rating: 2
+  - date: '2026-08-19'
+    rating: 3
     summary: >-
-      University of Toronto has a modest, decentralized public API footprint. I
-      verified live a standards-based OAI-PMH 2.0 endpoint and a DSpace REST API
-      for the TSpace institutional repository (migrated to the Scholaris DSpace
-      platform). The official EASI Timetable Builder (ttb.utoronto.ca) loads but
-      exposes no publicly documented developer API; guessed endpoint paths
-      returned 404, so no timetable API is cataloged to avoid fabrication. The
-      former community Cobalt open-data API is deprecated/archived since 2020 and
-      is listed only for historical context. No official institution-branded
-      developer portal, sign-up, or plans/rate-limit pages were found.
+      Re-profiled under the university pipeline with operator attribution settled before anything was
+      saved. The June 2026 review concluded there was no cataloguable timetable API; that was wrong,
+      and it was wrong for an instructive reason — it guessed paths under ttb.utoronto.ca instead of
+      reading the official client bundle, which declares the real base as
+      https://api.easi.utoronto.ca/ttb. Six operations there are live and unauthenticated, returning
+      real course, section, meeting-time, enrolment and building data across all divisions and all
+      three campuses. That host is under utoronto.ca and is run by EASI within U of T Information
+      Technology Services, which makes it genuinely institution-operated. A second
+      institution-operated surface was found: the UTORauth Shibboleth identity provider publishes
+      signed SAML 2.0 metadata registered in the Canadian Access Federation with the REFEDS Research
+      & Scholarship entity category and SIRTFI assurance. Three surfaces were confirmed as tenant
+      relationships and re-labelled rather than deleted — TSpace OAI-PMH and TSpace DSpace REST now
+      run on Scholaris (OCUL), and the U of T Dataverse is a collection inside Borealis. The
+      deprecated Cobalt community API was removed; its endpoint 404s and it was never
+      institution-operated. What is genuinely absent: any developer portal, any published API
+      documentation or OpenAPI, any terms of use, versioning scheme, status page, rate-limit
+      statement, OAuth surface or developer support channel. The University does publish an llms.txt
+      at its web root, which is more agent-facing provision than most of this cohort makes.
     endpoints:
-      - url: https://www.utoronto.ca/
+      - url: https://api.easi.utoronto.ca/ttb/reference-data
         status: 200
-        note: Official institution website.
+        note: >-
+          GET, unauthenticated, ~11.7 KB of search facets — sessions, divisions, campuses,
+          requirements, course levels, delivery modes, credit weights.
+      - url: https://api.easi.utoronto.ca/ttb/current-session
+        status: 200
+        note: Session options; returned Summer 2026 (20265), sub-sessions, and later terms.
+      - url: https://api.easi.utoronto.ca/ttb/getMatchingDivisions?query=arts
+        status: 200
+        note: Division type-ahead; returned APSC = Faculty of Applied Science & Engineering.
+      - url: https://api.easi.utoronto.ca/ttb/getPageableCourses
+        status: 200
+        note: >-
+          POST with a faceted search body; returned real course records with sections, meeting
+          times, enrolment counts and map deep-links for session 20269, division ARTSC.
+      - url: https://api.easi.utoronto.ca/ttb/getCourses
+        status: 200
+        note: POST, unpaged; returned a 12.9 MB body with no compression and no rate-limit header.
+      - url: https://api.easi.utoronto.ca/ttb/getCoursesByCodeAndSectionCode/CSC108H1
+        status: 200
+        note: GET by course code; ~295 KB.
+      - url: https://api.easi.utoronto.ca/ttb/getMatchingDepartments
+        status: 404
+        note: >-
+          Declared in the shipping client bundle but not routed by the deployed gateway. Same for
+          getMatchingCourseTitles, getOptimizedMatchingCourseTitles, findById and the two-segment
+          getCoursesByCodeAndSectionCode form.
+      - url: https://api.easi.utoronto.ca/ttb/v3/api-docs
+        status: 404
+        note: No OpenAPI, no Swagger UI. Confirmed absent, not merely unfound.
+      - url: https://idpz.utorauth.utoronto.ca/idp/shibboleth
+        status: 200
+        note: >-
+          Signed SAML 2.0 md:EntityDescriptor, entityID https://idpz.utorauth.utoronto.ca/shibboleth,
+          registrationAuthority http://www.canarie.ca, registered 2018-09-21.
       - url: https://utoronto.scholaris.ca/server/oai/request?verb=Identify
         status: 200
-        note: TSpace OAI-PMH 2.0 Identify resolves; repository name "TSpace".
-      - url: https://utoronto.scholaris.ca/server/oai/request?verb=ListMetadataFormats
-        status: 200
-        note: OAI-PMH ListMetadataFormats responds.
+        note: >-
+          OAI-PMH 2.0, repositoryName "TSpace", adminEmail tspace@library.utoronto.ca, earliest
+          datestamp 2003-03-24. TENANT — the host is OCUL's Scholaris, not U of T's.
+      - url: https://tspace.library.utoronto.ca/server/oai/request?verb=Identify
+        status: 302
+        note: >-
+          The University's own vanity host now redirects to Scholaris. The migration moved the
+          operator, not just the address.
       - url: https://utoronto.scholaris.ca/server/api
         status: 200
-        note: DSpace REST API root responds on Scholaris platform.
+        note: DSpace 8.4 HAL root, dspaceName "TSpace". Vendor contract, tenant deployment.
+      - url: https://borealisdata.ca/api/dataverses/toronto
+        status: 200
+        note: >-
+          Dataverse Native API — alias "toronto", name "U of T Dataverse", affiliation "University of
+          Toronto". TENANT inside Borealis / Scholars Portal.
+      - url: https://www.utoronto.ca/llms.txt
+        status: 200
+        note: >-
+          4.4 KB curated agent guide to the central website, naming academics, research, campuses,
+          news, safety, privacy and the campus map. Institution-published.
       - url: https://ttb.utoronto.ca/
         status: 200
-        note: Official EASI Timetable Builder UI; no public API docs.
-      - url: https://ttb.utoronto.ca/api/getPageableCourses
+        note: >-
+          Official Timetable Builder UI. Serves the Angular bundle that declares the API operation
+          constants; robots.txt returns the SPA shell, not a robots file.
+      - url: https://onesearch.library.utoronto.ca/api/search?q=test
+        status: 200
+        note: >-
+          SOFT 404 — returns the same 389 KB Next.js shell as the site root. Not an API. Not
+          catalogued.
+      - url: https://cobalt.qas.im/1.0/courses
         status: 404
-        note: Guessed timetable API path does not resolve; not cataloged.
-      - url: https://github.com/utoronto
+        note: >-
+          The deprecated community Cobalt open-data API is dead. Removed from the catalogue; it was
+          never institution-operated.
+      - url: https://people.utoronto.ca/
+        status: 202
+        note: Bot challenge (sgcaptcha). Live, not dead — recorded as a finding about us, not them.
+      - url: https://developer.utoronto.ca/
+        status: 0
+        note: NXDOMAIN. No developer portal exists.
+      - url: https://api.utoronto.ca/
+        status: 0
+        note: NXDOMAIN. No central API host.
+      - url: https://www.utoronto.ca/.well-known/security.txt
+        status: 404
+        note: No RFC 9116 security.txt.
+      - url: https://docs.scinet.utoronto.ca/
         status: 200
-        note: Official University of Toronto GitHub organization.
-      - url: https://github.com/utlib
+        note: SciNet research-computing documentation on the University's own host.
+      - url: https://ai.utoronto.ca/
         status: 200
-        note: University of Toronto Libraries GitHub organization.
-      - url: https://github.com/cobalt-uoft/cobalt
+        note: '"Toward an AI-ready university" — U of T AI Task Force, guidelines, tools and training.'
+      - url: https://its.utoronto.ca/ai/
         status: 200
-        note: Cobalt open-data project repo; deprecated/archived since 2020.
-      - url: https://cobalt.qas.im
-        status: 200
-        note: Legacy Cobalt API host responds but project is unmaintained.
+        note: Information Technology Services AI tooling for staff and students.
       - url: https://www.linkedin.com/school/university-of-toronto/
         status: 999
-        note: LinkedIn school page (999 is LinkedIn anti-bot, page exists).
+        note: LinkedIn anti-bot response; the page exists.

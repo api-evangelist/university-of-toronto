@@ -1,0 +1,100 @@
+---
+generated: '2026-08-19'
+method: derived
+source: >-
+  Derived by API Evangelist from live responses of https://api.easi.utoronto.ca/ttb/reference-data,
+  /current-session and /getMatchingDivisions captured 2026-08-19, and from the SAML metadata at
+  https://idpz.utorauth.utoronto.ca/idp/shibboleth. Every term below appears verbatim in a
+  University of Toronto response; none was invented. The University publishes no vocabulary
+  document of its own.
+x-operator: institution
+vocabularies:
+  - name: Session code
+    surface: university-of-toronto:ttb-course-timetable
+    form: Five digits, YYYYT, where T is the term digit.
+    terms:
+      - value: '20265'
+        label: Summer 2026
+      - value: '20265F'
+        label: Summer First Sub-Session 2026 (F)
+      - value: '20265S'
+        label: Summer Second Sub-Session 2026 (S)
+      - value: '20269'
+        label: Fall 2026
+      - value: '20271'
+        label: Winter 2027
+    note: >-
+      Sub-session suffixes F and S apply only to Summer. A full-year course is expressed as a pair
+      of sessions rather than a single code.
+  - name: Division code
+    surface: university-of-toronto:ttb-course-timetable
+    note: Academic division, verified live via /getMatchingDivisions.
+    terms:
+      - value: APSC
+        label: Faculty of Applied Science & Engineering
+      - value: ARTSC
+        label: Faculty of Arts & Science
+      - value: ERIN
+        label: University of Toronto Mississauga
+      - value: SCAR
+        label: University of Toronto Scarborough
+  - name: Campus
+    surface: university-of-toronto:ttb-course-timetable
+    terms:
+      - St. George
+      - Mississauga
+      - Scarborough
+  - name: Section code
+    surface: university-of-toronto:ttb-course-timetable
+    terms:
+      - value: F
+        label: Fall term
+      - value: S
+        label: Winter term
+      - value: 'Y'
+        label: Full year
+  - name: Teaching method
+    surface: university-of-toronto:ttb-course-timetable
+    terms:
+      - value: LEC
+        label: Lecture
+      - value: TUT
+        label: Tutorial
+      - value: PRA
+        label: Practical
+  - name: Delivery mode
+    surface: university-of-toronto:ttb-course-timetable
+    terms:
+      - value: INPER
+        label: In person
+    note: >-
+      Only INPER was observed in the sampled responses. Other codes exist in the reference-data
+      deliveryModes list but are not asserted here without an observation.
+  - name: Boolean indicator
+    surface: university-of-toronto:ttb-course-timetable
+    form: Single character Y or N, used for cancelInd, waitlistInd, tbaInd and openLimitInd.
+    note: >-
+      A recurring design tell across the surface — booleans are transported as characters, and
+      timestamps as weekday-plus-milliseconds. Both are legacy SIS encodings surfacing unchanged.
+  - name: Enrolment control indicator
+    surface: university-of-toronto:ttb-course-timetable
+    note: >-
+      Division-scoped codes resolved through the divisionalEnrolmentIndicators map returned
+      alongside every search. Observed for ARTSC.
+    terms:
+      - value: E
+        label: >-
+          Enrolment via ACORN is not available. Students must request permission to enrol by
+          contacting the sponsoring department.
+      - value: R1
+        label: 'Restricted: course/section is restricted at all times for specific students.'
+  - name: Federation entity attribute
+    surface: university-of-toronto:utorauth-shibboleth-idp
+    x-operator: institution
+    terms:
+      - value: http://refeds.org/category/research-and-scholarship
+        label: REFEDS Research & Scholarship entity category
+      - value: https://refeds.org/sirtfi
+        label: SIRTFI security incident response trust framework
+      - value: http://www.canarie.ca
+        label: Registration authority — Canadian Access Federation (CANARIE)
