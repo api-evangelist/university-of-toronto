@@ -97,68 +97,6 @@ components:
             live:
               externalValue: ../examples/ttb-gateway-404-response.json
   schemas:
-    ApplicationStatus:
-      type: object
-      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
-      properties:
-        code:
-          type: integer
-          example: 4404
-        message:
-          type: string
-          example: No results found. Please try modifying your search criteria.
-    OptionListEnvelope:
-      type: object
-      properties:
-        payload:
-          type: array
-          items:
-            $ref: '#/components/schemas/Option'
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationStatus'
-    GatewayError:
-      type: object
-      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
-      properties:
-        statusCode:
-          type: integer
-          example: 404
-        message:
-          type: string
-          example: Resource not found
-    Option:
-      type: object
-      description: A selectable facet value used by the Timetable Builder UI.
-      properties:
-        label:
-          type: string
-          example: Summer 2026
-        value:
-          type: string
-          example: '20265'
-        selected:
-          type: boolean
-        header:
-          type: boolean
-          description: True when the option is a non-selectable group heading.
-        group:
-          type:
-          - string
-          - 'null'
-          example: Summer-20265
-        metadata:
-          type: object
-          properties:
-            name:
-              type:
-              - string
-              - 'null'
-            type:
-              type:
-              - string
-              - 'null'
     ReferenceDataEnvelope:
       type: object
       properties:
@@ -213,3 +151,65 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationStatus'
+    OptionListEnvelope:
+      type: object
+      properties:
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/Option'
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatus'
+    GatewayError:
+      type: object
+      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
+    ApplicationStatus:
+      type: object
+      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
+      properties:
+        code:
+          type: integer
+          example: 4404
+        message:
+          type: string
+          example: No results found. Please try modifying your search criteria.
+    Option:
+      type: object
+      description: A selectable facet value used by the Timetable Builder UI.
+      properties:
+        label:
+          type: string
+          example: Summer 2026
+        value:
+          type: string
+          example: '20265'
+        selected:
+          type: boolean
+        header:
+          type: boolean
+          description: True when the option is a non-selectable group heading.
+        group:
+          type:
+          - string
+          - 'null'
+          example: Summer-20265
+        metadata:
+          type: object
+          properties:
+            name:
+              type:
+              - string
+              - 'null'
+            type:
+              type:
+              - string
+              - 'null'
