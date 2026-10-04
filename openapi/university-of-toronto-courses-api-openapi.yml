@@ -121,17 +121,17 @@ paths:
         '404':
           $ref: '#/components/responses/GatewayNotFound'
 components:
-  responses:
-    GatewayNotFound:
-      description: The gateway did not match a route.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/GatewayError'
-          examples:
-            live:
-              externalValue: ../examples/ttb-gateway-404-response.json
   schemas:
+    ApplicationStatus:
+      type: object
+      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
+      properties:
+        code:
+          type: integer
+          example: 4404
+        message:
+          type: string
+          example: No results found. Please try modifying your search criteria.
     MeetingTime:
       type: object
       properties:
@@ -194,81 +194,6 @@ components:
         millisofday:
           type: integer
           example: 43200000
-    Section:
-      type: object
-      properties:
-        name:
-          type: string
-          example: TUT0102
-        type:
-          type: string
-          example: Tutorial
-        teachMethod:
-          type: string
-          example: TUT
-        sectionNumber:
-          type: string
-        meetingTimes:
-          type: array
-          items:
-            $ref: '#/components/schemas/MeetingTime'
-        instructors:
-          type: array
-          items:
-            type: object
-        currentEnrolment:
-          type: integer
-        maxEnrolment:
-          type: integer
-        currentWaitlist:
-          type: integer
-        subTitle:
-          type: string
-        cancelInd:
-          type: string
-          enum:
-          - Y
-          - N
-        waitlistInd:
-          type: string
-          enum:
-          - Y
-          - N
-        tbaInd:
-          type: string
-          enum:
-          - Y
-          - N
-        openLimitInd:
-          type: string
-          enum:
-          - Y
-          - N
-        deliveryModes:
-          type: array
-          items:
-            type: object
-            properties:
-              session:
-                type: string
-              mode:
-                type: string
-                example: INPER
-        notes:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              type:
-                type: string
-              content:
-                type: string
-        enrolmentControls:
-          type: array
-          items:
-            type: object
     PageableCourseEnvelope:
       type: object
       properties:
@@ -311,54 +236,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ApplicationStatus'
-    ApplicationStatusEnvelope:
-      type: object
-      properties:
-        payload:
-          type: 'null'
-        status:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationStatus'
-    Building:
-      type: object
-      properties:
-        buildingCode:
-          type: string
-          example: SF
-        buildingRoomNumber:
-          type: string
-        buildingRoomSuffix:
-          type: string
-        buildingUrl:
-          type: string
-          format: uri
-          description: Deep link into the official U of T campus map at https://map.utoronto.ca.
-          example: https://map.utoronto.ca/?id=1809#!m/494481
-        buildingName:
-          type:
-          - string
-          - 'null'
-    GatewayError:
-      type: object
-      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
-      properties:
-        statusCode:
-          type: integer
-          example: 404
-        message:
-          type: string
-          example: Resource not found
-    ApplicationStatus:
-      type: object
-      description: Business-level status returned inside the response body. Observed value 4404 = no results. The University publishes no catalogue of these codes; see errors/ for what has been observed.
-      properties:
-        code:
-          type: integer
-          example: 4404
-        message:
-          type: string
-          example: No results found. Please try modifying your search criteria.
     CourseSearch:
       type: object
       description: Faceted timetable search. Empty arrays mean "do not filter on this facet".
@@ -437,3 +314,126 @@ components:
           enum:
           - asc
           - desc
+    ApplicationStatusEnvelope:
+      type: object
+      properties:
+        payload:
+          type: 'null'
+        status:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationStatus'
+    Section:
+      type: object
+      properties:
+        name:
+          type: string
+          example: TUT0102
+        type:
+          type: string
+          example: Tutorial
+        teachMethod:
+          type: string
+          example: TUT
+        sectionNumber:
+          type: string
+        meetingTimes:
+          type: array
+          items:
+            $ref: '#/components/schemas/MeetingTime'
+        instructors:
+          type: array
+          items:
+            type: object
+        currentEnrolment:
+          type: integer
+        maxEnrolment:
+          type: integer
+        currentWaitlist:
+          type: integer
+        subTitle:
+          type: string
+        cancelInd:
+          type: string
+          enum:
+          - Y
+          - N
+        waitlistInd:
+          type: string
+          enum:
+          - Y
+          - N
+        tbaInd:
+          type: string
+          enum:
+          - Y
+          - N
+        openLimitInd:
+          type: string
+          enum:
+          - Y
+          - N
+        deliveryModes:
+          type: array
+          items:
+            type: object
+            properties:
+              session:
+                type: string
+              mode:
+                type: string
+                example: INPER
+        notes:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              content:
+                type: string
+        enrolmentControls:
+          type: array
+          items:
+            type: object
+    GatewayError:
+      type: object
+      description: Edge-level error emitted by the api.easi.utoronto.ca gateway before the TTB service is reached.
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Resource not found
+    Building:
+      type: object
+      properties:
+        buildingCode:
+          type: string
+          example: SF
+        buildingRoomNumber:
+          type: string
+        buildingRoomSuffix:
+          type: string
+        buildingUrl:
+          type: string
+          format: uri
+          description: Deep link into the official U of T campus map at https://map.utoronto.ca.
+          example: https://map.utoronto.ca/?id=1809#!m/494481
+        buildingName:
+          type:
+          - string
+          - 'null'
+  responses:
+    GatewayNotFound:
+      description: The gateway did not match a route.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/GatewayError'
+          examples:
+            live:
+              externalValue: ../examples/ttb-gateway-404-response.json
